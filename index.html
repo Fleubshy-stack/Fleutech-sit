@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fleutech - Services informatiques: développement web, support informatique, cybersécurité, solutions réseau">
+    <meta name="keywords" content="développement web, cybersécurité, support informatique, solutions réseau, Fleutech">
+    <meta name="author" content="Fleutech">
+    <title>Fleutech - Innover aujourd'hui pour réussir demain</title>
+
+    <!-- Open Graph / partage réseaux sociaux -->
+    <meta property="og:title" content="Fleutech - Innover aujourd'hui pour réussir demain">
+    <meta property="og:description" content="Votre partenaire de confiance pour des solutions informatiques innovantes: développement web, cybersécurité, support IT, solutions réseau.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- Preconnect pour performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+<header class="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      <span class="logo-icon" aria-hidden="true">⚡</span>
+      <span class="logo-text">Fleutech</span>
+    </div>
+
+    <nav class="nav-menu" id="navMenu">
+      <a href="#hero" class="nav-link" data-i18n="home">Accueil</a>
+      <a href="#services" class="nav-link" data-i18n="services">Services</a>
+      <a href="#solutions" class="nav-link" data-i18n="solutions">Solutions</a>
+      <a href="#projects" class="nav-link" data-i18n="projects">Projets</a>
+      <a href="#tech-stack" class="nav-link" data-i18n="techStack">Stack Tech</a>
+      <a href="#blog" class="nav-link" data-i18n="blog">Blog</a>
+      <a href="#testimonials" class="nav-link" data-i18n="testimonials">Avis</a>
+      <a href="#contact" class="nav-link" data-i18n="contact">Contact</a>
+    </nav>
+
+    <div class="nav-actions">
+      <div class="language-selector">
+        <button id="currentLang" class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false">FR</button>
+        <div id="langDropdown" class="lang-dropdown">
+          <a href="#" class="lang-option" data-lang="fr">Français</a>
+          <a href="#" class="lang-option" data-lang="en">English</a>
+          <a href="#" class="lang-option" data-lang="ht">Kreyòl</a>
+        </div>
+      </div>
+
+      <button class="booking-btn" type="button" onclick="openBooking()">
+        <i class="fas fa-calendar-check" aria-hidden="true"></i>
+        <span data-i18n="bookNow">Prendre Rendez-vous</span>
+      </button>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" type="button" aria-label="Ouvrir le menu">
+        <i class="fas fa-bars" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section id="hero" class="hero">
+  <div id="networkCanvas" class="network-background"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <i class="fas fa-bolt" aria-hidden="true"></i>
+      <span>Fleutech • IT Solutions</span>
+    </div>
+
+    <h1 class="hero-title">
+      <span class="title-line" data-i18n="heroTitle1">Innover aujourd'hui</span>
+      <span class="title-line highlight" data-i18n="heroTitle2">pour réussir demain</span>
+    </h1>
+
+    <p class="hero-subtitle" data-i18n="heroSubtitle">
+      Votre partenaire de confiance pour des solutions informatiques innovantes et performantes
+    </p>
+
+    <div class="hero-buttons">
+      <button class="btn btn-primary" type="button" onclick="openQuoteForm()">
+        <i class="fas fa-quote-left" aria-hidden="true"></i>
+        <span data-i18n="getQuote">Demander un Devis</span>
+      </button>
+
+      <button class="btn btn-secondary" type="button" onclick="openBooking()">
+        <i class="fas fa-calendar-check" aria-hidden="true"></i>
+        <span data-i18n="bookNow">Prendre Rendez-vous</span>
+      </button>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-number">500+</span>
+        <span class="stat-label" data-i18n="statProjects">Projets Réalisés</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">98%</span>
+        <span class="stat-label" data-i18n="statSatisfaction">Satisfaction Client</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">24/7</span>
+        <span class="stat-label" data-i18n="statSupport">Support Disponible</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- Section Services Interactive avec cartes qui se retournent -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="servicesTitle">Nos Services</h2>
+                <p class="section-subtitle" data-i18n="servicesSubtitle">
+                    Des expertises techniques de pointe pour répondre à tous vos besoins informatiques
+                </p>
+            </div>
+            <div class="services-grid">
+                <!-- Carte Développement Web -->
+                <div class="service-card">
+                    <div class="service-card-inner">
+                        <div class="service-card-front">
+                            <div class="service-icon">
+                                <i class="fas fa-code" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="service-name" data-i18n="devWeb">Développement Web</h3>
+                            <p class="service-desc-short" data-i18n="devWebShort">
+                                Création de sites et applications web modernes et performants
+                            </p>
+                            <span class="flip-indicator" data-i18n="flipCard">
+                                <i class="fas fa-arrow-down" aria-hidden="true"></i> Survoler pour plus
+                            </span>
+                        </div>
+                        <div class="service-card-back">
+                            <h3 class="service-name" data-i18n="devWeb">Développement Web</h3>
+                            <ul class="service-features">
+                                <li data-i18n="devWebFeat1"><i class="fas fa-check" aria-hidden="true"></i> Sites web responsifs</li>
+                                <li data-i18n="devWebFeat2"><i class="fas fa-check" aria-hidden="true"></i> Applications web complexes</li>
+                                <li data-i18n="devWebFeat3"><i class="fas fa-check" aria-hidden="true"></i> E-commerce & plateformes</li>
+                                <li data-i18n="devWebFeat4"><i class="fas fa-check" aria-hidden="true"></i> Optimisation performance</li>
+                                <li data-i18n="devWebFeat5"><i class="fas fa-check" aria-hidden="true"></i> SEO optimisation</li>
+                            </ul>
+                            <button class="btn btn-small" onclick="openQuoteForm('développement web')" data-i18n="learnMore">
+                                Plus d'infos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carte Cybersécurité -->
+                <div class="service-card">
+                    <div class="service-card-inner">
+                        <div class="service-card-front">
+                            <div class="service-icon">
+                                <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="service-name" data-i18n="cyberSec">Cybersécurité</h3>
+                            <p class="service-desc-short" data-i18n="cyberSecShort">
+                                Protection de vos systèmes et données contre les menaces numériques
+                            </p>
+                            <span class="flip-indicator" data-i18n="flipCard">
+                                <i class="fas fa-arrow-down" aria-hidden="true"></i> Survoler pour plus
+                            </span>
+                        </div>
+                        <div class="service-card-back">
+                            <h3 class="service-name" data-i18n="cyberSec">Cybersécurité</h3>
+                            <ul class="service-features">
+                                <li data-i18n="cyberSecFeat1"><i class="fas fa-check" aria-hidden="true"></i> Audit de sécurité</li>
+                                <li data-i18n="cyberSecFeat2"><i class="fas fa-check" aria-hidden="true"></i> Protection contre les attaques</li>
+                                <li data-i18n="cyberSecFeat3"><i class="fas fa-check" aria-hidden="true"></i> Gestion des vulnérabilités</li>
+                                <li data-i18n="cyberSecFeat4"><i class="fas fa-check" aria-hidden="true"></i> Formation sécurité</li>
+                                <li data-i18n="cyberSecFeat5"><i class="fas fa-check" aria-hidden="true"></i> Conformité réglementaire</li>
+                            </ul>
+                            <button class="btn btn-small" onclick="openQuoteForm('cybersécurité')" data-i18n="learnMore">
+                                Plus d'infos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carte Support Informatique -->
+                <div class="service-card">
+                    <div class="service-card-inner">
+                        <div class="service-card-front">
+                            <div class="service-icon">
+                                <i class="fas fa-headset" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="service-name" data-i18n="support">Support Informatique</h3>
+                            <p class="service-desc-short" data-i18n="supportShort">
+                                Assistance technique 24/7 pour votre infrastructure informatique
+                            </p>
+                            <span class="flip-indicator" data-i18n="flipCard">
+                                <i class="fas fa-arrow-down" aria-hidden="true"></i> Survoler pour plus
+                            </span>
+                        </div>
+                        <div class="service-card-back">
+                            <h3 class="service-name" data-i18n="support">Support Informatique</h3>
+                            <ul class="service-features">
+                                <li data-i18n="supportFeat1"><i class="fas fa-check" aria-hidden="true"></i> Support 24/7</li>
+                                <li data-i18n="supportFeat2"><i class="fas fa-check" aria-hidden="true"></i> Maintenance préventive</li>
+                                <li data-i18n="supportFeat3"><i class="fas fa-check" aria-hidden="true"></i> Résolution rapide</li>
+                                <li data-i18n="supportFeat4"><i class="fas fa-check" aria-hidden="true"></i> Assistance à distance</li>
+                                <li data-i18n="supportFeat5"><i class="fas fa-check" aria-hidden="true"></i> Gestion incidents</li>
+                            </ul>
+                            <button class="btn btn-small" onclick="openQuoteForm('support informatique')" data-i18n="learnMore">
+                                Plus d'infos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carte Solutions Réseau -->
+                <div class="service-card">
+                    <div class="service-card-inner">
+                        <div class="service-card-front">
+                            <div class="service-icon">
+                                <i class="fas fa-network-wired" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="service-name" data-i18n="network">Solutions Réseau</h3>
+                            <p class="service-desc-short" data-i18n="networkShort">
+                                Infrastructure réseau robuste et performante pour votre entreprise
+                            </p>
+                            <span class="flip-indicator" data-i18n="flipCard">
+                                <i class="fas fa-arrow-down" aria-hidden="true"></i> Survoler pour plus
+                            </span>
+                        </div>
+                        <div class="service-card-back">
+                            <h3 class="service-name" data-i18n="network">Solutions Réseau</h3>
+                            <ul class="service-features">
+                                <li data-i18n="networkFeat1"><i class="fas fa-check" aria-hidden="true"></i> Installation réseau</li>
+                                <li data-i18n="networkFeat2"><i class="fas fa-check" aria-hidden="true"></i> Configuration serveurs</li>
+                                <li data-i18n="networkFeat3"><i class="fas fa-check" aria-hidden="true"></i> Sécurité réseau</li>
+                                <li data-i18n="networkFeat4"><i class="fas fa-check" aria-hidden="true"></i> Cloud integration</li>
+                                <li data-i18n="networkFeat5"><i class="fas fa-check" aria-hidden="true"></i> Monitoring 24/7</li>
+                            </ul>
+                            <button class="btn btn-small" onclick="openQuoteForm('solutions réseau')" data-i18n="learnMore">
+                                Plus d'infos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Espace Solutions Clés en Main -->
+    <section id="solutions" class="solutions">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="solutionsTitle">Solutions Clés en Main</h2>
+                <p class="section-subtitle" data-i18n="solutionsSubtitle">
+                    Des packs de services adaptés à vos besoins et à votre budget
+                </p>
+            </div>
+            <div class="solutions-grid">
+                <!-- Pack Startup -->
+                <div class="solution-card">
+                    <div class="solution-badge" data-i18n="popularBadge">Populaire</div>
+                    <div class="solution-icon">
+                        <i class="fas fa-rocket" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="solution-name" data-i18n="packStartup">Pack Startup</h3>
+                    <p class="solution-desc" data-i18n="packStartupDesc">
+                        Pour les entreprises qui démarrent et veulent une base solide
+                    </p>
+                    <div class="solution-price">
+                        <span class="price-amount">499$</span>
+                        <span class="price-period" data-i18n="perMonth">/mois</span>
+                    </div>
+                    <ul class="solution-features">
+                        <li data-i18n="packStartupFeat1"><i class="fas fa-check" aria-hidden="true"></i> Site web responsive</li>
+                        <li data-i18n="packStartupFeat2"><i class="fas fa-check" aria-hidden="true"></i> Support 9h-18h</li>
+                        <li data-i18n="packStartupFeat3"><i class="fas fa-check" aria-hidden="true"></i> Maintenance mensuelle</li>
+                        <li data-i18n="packStartupFeat4"><i class="fas fa-check" aria-hidden="true"></i> SEO basique</li>
+                        <li data-i18n="packStartupFeat5"><i class="fas fa-check" aria-hidden="true"></i> 10h développement/mois</li>
+                    </ul>
+                    <button class="btn btn-primary btn-block" onclick="openQuoteForm('Pack Startup')" data-i18n="choosePack">
+                        Choisir ce Pack
+                    </button>
+                </div>
+
+                <!-- Pack Sécurité PME -->
+                <div class="solution-card featured">
+                    <div class="solution-badge featured-badge" data-i18n="recommendedBadge">Recommandé</div>
+                    <div class="solution-icon">
+                        <i class="fas fa-shield-check" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="solution-name" data-i18n="packSecurity">Pack Sécurité PME</h3>
+                    <p class="solution-desc" data-i18n="packSecurityDesc">
+                        Protection complète pour les entreprises de taille moyenne
+                    </p>
+                    <div class="solution-price">
+                        <span class="price-amount">899$</span>
+                        <span class="price-period" data-i18n="perMonth">/mois</span>
+                    </div>
+                    <ul class="solution-features">
+                        <li data-i18n="packSecurityFeat1"><i class="fas fa-check" aria-hidden="true"></i> Audit sécurité complet</li>
+                        <li data-i18n="packSecurityFeat2"><i class="fas fa-check" aria-hidden="true"></i> Protection 24/7</li>
+                        <li data-i18n="packSecurityFeat3"><i class="fas fa-check" aria-hidden="true"></i> Backup automatique</li>
+                        <li data-i18n="packSecurityFeat4"><i class="fas fa-check" aria-hidden="true"></i> Formation équipe</li>
+                        <li data-i18n="packSecurityFeat5"><i class="fas fa-check" aria-hidden="true"></i> Conformité réglementaire</li>
+                        <li data-i18n="packSecurityFeat6"><i class="fas fa-check" aria-hidden="true"></i> Support prioritaire</li>
+                    </ul>
+                    <button class="btn btn-primary btn-block" onclick="openQuoteForm('Pack Sécurité PME')" data-i18n="choosePack">
+                        Choisir ce Pack
+                    </button>
+                </div>
+
+                <!-- Pack Entreprise -->
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-building" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="solution-name" data-i18n="packEnterprise">Pack Entreprise</h3>
+                    <p class="solution-desc" data-i18n="packEnterpriseDesc">
+                        Solution complète pour les grandes entreprises
+                    </p>
+                    <div class="solution-price">
+                        <span class="price-amount">1 499$</span>
+                        <span class="price-period" data-i18n="perMonth">/mois</span>
+                    </div>
+                    <ul class="solution-features">
+                        <li data-i18n="packEnterpriseFeat1"><i class="fas fa-check" aria-hidden="true"></i> Tout inclus Pack PME</li>
+                        <li data-i18n="packEnterpriseFeat2"><i class="fas fa-check" aria-hidden="true"></i> Infrastructure réseau</li>
+                        <li data-i18n="packEnterpriseFeat3"><i class="fas fa-check" aria-hidden="true"></i> Cloud integration</li>
+                        <li data-i18n="packEnterpriseFeat4"><i class="fas fa-check" aria-hidden="true"></i> Développement dédié</li>
+                        <li data-i18n="packEnterpriseFeat5"><i class="fas fa-check" aria-hidden="true"></i> Support 24/7 prioritaire</li>
+                        <li data-i18n="packEnterpriseFeat6"><i class="fas fa-check" aria-hidden="true"></i> 40h développement/mois</li>
+                        <li data-i18n="packEnterpriseFeat7"><i class="fas fa-check" aria-hidden="true"></i> Expert dédié</li>
+                    </ul>
+                    <button class="btn btn-primary btn-block" onclick="openQuoteForm('Pack Entreprise')" data-i18n="choosePack">
+                        Choisir ce Pack
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulaire de Devis Dynamique (Multi-step) -->
+    <section id="quote" class="quote-section">
+        <div class="container">
+            <div class="quote-wrapper">
+                <div class="quote-header">
+                    <h2 class="section-title" data-i18n="quoteTitle">Formulaire de Devis</h2>
+                    <p class="section-subtitle" data-i18n="quoteSubtitle">
+                        Découvrez le coût de votre projet en quelques étapes simples
+                    </p>
+                </div>
+                <div class="quote-form-container">
+                    <div class="quote-progress">
+                        <div class="progress-step active" data-step="1">
+                            <div class="step-number">1</div>
+                            <div class="step-label" data-i18n="step1">Service</div>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="2">
+                            <div class="step-number">2</div>
+                            <div class="step-label" data-i18n="step2">Besoins</div>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="3">
+                            <div class="step-number">3</div>
+                            <div class="step-label" data-i18n="step3">Infos</div>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="4">
+                            <div class="step-number">4</div>
+                            <div class="step-label" data-i18n="step4">Devis</div>
+                        </div>
+                    </div>
+
+                    <form id="quoteForm" class="quote-form" name="quote-form" data-netlify="true" netlify-honeypot="bot-field">
+                        <input type="hidden" name="form-name" value="quote-form">
+                        <p class="visually-hidden">
+                            <label>Ne pas remplir si vous êtes humain : <input name="bot-field"></label>
+                        </p>
+                        <!-- Étape 1: Service -->
+                        <div class="quote-step active" data-step="1">
+                            <h3 class="step-title" data-i18n="step1Title">Choisissez votre service</h3>
+                            <div class="service-selection">
+                                <label class="service-option">
+                                    <input type="checkbox" name="service" value="development">
+                                    <div class="service-checkbox">
+                                        <i class="fas fa-code" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="service-label">
+                                        <span data-i18n="devWeb">Développement Web</span>
+                                        <small data-i18n="devWebShort">Sites & applications web</small>
+                                    </div>
+                                </label>
+                                <label class="service-option">
+                                    <input type="checkbox" name="service" value="security">
+                                    <div class="service-checkbox">
+                                        <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="service-label">
+                                        <span data-i18n="cyberSec">Cybersécurité</span>
+                                        <small data-i18n="cyberSecShort">Protection & audit</small>
+                                    </div>
+                                </label>
+                                <label class="service-option">
+                                    <input type="checkbox" name="service" value="support">
+                                    <div class="service-checkbox">
+                                        <i class="fas fa-headset" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="service-label">
+                                        <span data-i18n="support">Support Informatique</span>
+                                        <small data-i18n="supportShort">Assistance 24/7</small>
+                                    </div>
+                                </label>
+                                <label class="service-option">
+                                    <input type="checkbox" name="service" value="network">
+                                    <div class="service-checkbox">
+                                        <i class="fas fa-network-wired" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="service-label">
+                                        <span data-i18n="network">Solutions Réseau</span>
+                                        <small data-i18n="networkShort">Infrastructure réseau</small>
+                                    </div>
+                                </label>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(2)" data-i18n="next">
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i> Suivant
+                            </button>
+                        </div>
+
+                        <!-- Étape 2: Besoins -->
+                        <div class="quote-step" data-step="2">
+                            <h3 class="step-title" data-i18n="step2Title">Décrivez vos besoins</h3>
+                            <div class="needs-selection">
+                                <label class="needs-option">
+                                    <input type="checkbox" name="needs" value="responsive">
+                                    <div class="needs-checkbox">
+                                        <i class="fas fa-mobile-alt" aria-hidden="true"></i>
+                                    </div>
+                                    <span data-i18n="needResponsive">Site responsive</span>
+                                </label>
+                                <label class="needs-option">
+                                    <input type="checkbox" name="needs" value="seo">
+                                    <div class="needs-checkbox">
+                                        <i class="fas fa-search" aria-hidden="true"></i>
+                                    </div>
+                                    <span data-i18n="needSEO">Optimisation SEO</span>
+                                </label>
+                                <label class="needs-option">
+                                    <input type="checkbox" name="needs" value="ecommerce">
+                                    <div class="needs-checkbox">
+                                        <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                                    </div>
+                                    <span data-i18n="needEcommerce">E-commerce</span>
+                                </label>
+                                <label class="needs-option">
+                                    <input type="checkbox" name="needs" value="database">
+                                    <div class="needs-checkbox">
+                                        <i class="fas fa-database" aria-hidden="true"></i>
+                                    </div>
+                                    <span data-i18n="needDatabase">Base de données</span>
+                                </label>
+                                <label class="needs-option">
+                                    <input type="checkbox" name="needs" value="api">
+                                    <div class="needs-checkbox">
+                                        <i class="fas fa-plug" aria-hidden="true"></i>
+                                    </div>
+                                    <span data-i18n="needAPI">Intégration API</span>
+                                </label>
+                                <label class="needs-option">
+                                    <input type="checkbox" name="needs" value="maintenance">
+                                    <div class="needs-checkbox">
+                                        <i class="fas fa-wrench" aria-hidden="true"></i>
+                                    </div>
+                                    <span data-i18n="needMaintenance">Maintenance régulière</span>
+                                </label>
+                            </div>
+                            <div class="form-buttons">
+                                <button type="button" class="btn btn-secondary" onclick="prevStep(1)" data-i18n="back">
+                                    <i class="fas fa-arrow-left" aria-hidden="true"></i> Retour
+                                </button>
+                                <button type="button" class="btn btn-primary" onclick="nextStep(3)" data-i18n="next">
+                                    <i class="fas fa-arrow-right" aria-hidden="true"></i> Suivant
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Étape 3: Informations -->
+                        <div class="quote-step" data-step="3">
+                            <h3 class="step-title" data-i18n="step3Title">Vos informations</h3>
+                            <div class="form-group">
+                                <label for="companyName" data-i18n="companyName">Nom de l'entreprise</label>
+                                <input type="text" id="companyName" name="company" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactName" data-i18n="contactName">Nom du contact</label>
+                                <input type="text" id="contactName" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail" data-i18n="contactEmail">Email</label>
+                                <input type="email" id="contactEmail" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactPhone" data-i18n="contactPhone">Téléphone</label>
+                                <input type="tel" id="contactPhone" name="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="budget" data-i18n="budget">Budget estimé</label>
+                                <select id="budget" name="budget">
+                                    <option value="" data-i18n="budgetSelect">Sélectionner...</option>
+                                    <option value="500-1000" data-i18n="budget1">500$ - 1000$</option>
+                                    <option value="1000-3000" data-i18n="budget2">1000$ - 3000$</option>
+                                    <option value="3000-5000" data-i18n="budget3">3000$ - 5000$</option>
+                                    <option value="5000+" data-i18n="budget4">5000$+</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="message" data-i18n="message">Message (optionnel)</label>
+                                <textarea id="message" name="message" rows="4"></textarea>
+                            </div>
+                            <div class="form-buttons">
+                                <button type="button" class="btn btn-secondary" onclick="prevStep(2)" data-i18n="back">
+                                    <i class="fas fa-arrow-left" aria-hidden="true"></i> Retour
+                                </button>
+                                <button type="button" class="btn btn-primary" onclick="submitQuote()" data-i18n="getQuote">
+                                    <i class="fas fa-calculator" aria-hidden="true"></i> Obtenir Devis
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Étape 4: Devis -->
+                        <div class="quote-step" data-step="4">
+                            <div class="quote-success">
+                                <div class="success-icon">
+                                    <i class="fas fa-check-circle" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="success-title" data-i18n="quoteSuccessTitle">Devis Généré!</h3>
+                                <p class="success-message" data-i18n="quoteSuccessMessage">
+                                    Votre devis estimatif est prêt. Un membre de notre équipe vous contactera dans les 24h pour confirmer.
+                                </p>
+                                <div class="quote-estimate">
+                                    <div class="estimate-header" data-i18n="estimateTitle">Estimation:</div>
+                                    <div class="estimate-amount" id="estimateAmount">850$ - 1200$</div>
+                                    <div class="estimate-period" data-i18n="estimatePeriod">Pour votre projet</div>
+                                </div>
+                                <div class="success-actions">
+                                    <button type="button" class="btn btn-primary" onclick="openBooking()" data-i18n="bookConsultation">
+                                        <i class="fas fa-calendar-alt" aria-hidden="true"></i> Prendre Rendez-vous
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" onclick="resetQuoteForm()" data-i18n="newQuote">
+                                        <i class="fas fa-redo" aria-hidden="true"></i> Nouveau Devis
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Vitrine Projets -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="projectsTitle">Nos Projets</h2>
+                <p class="section-subtitle" data-i18n="projectsSubtitle">
+                    Découvrez nos réalisations et comment nous avons résolu les défis de nos clients
+                </p>
+            </div>
+            <div class="projects-grid">
+                <!-- Projet 1: E-commerce -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-mockup">
+                            <i class="fas fa-shopping-bag" aria-hidden="true"></i>
+                        </div>
+                        <div class="project-overlay">
+                            <button class="btn btn-small" onclick="viewProject(1)" data-i18n="viewProject">
+                                <i class="fas fa-eye" aria-hidden="true"></i> Voir Détails
+                            </button>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-category" data-i18n="catEcommerce">E-commerce</div>
+                        <h3 class="project-name" data-i18n="project1Name">Plateforme E-commerce Mode</h3>
+                        <p class="project-desc" data-i18n="project1Desc">
+                            Création d'une plateforme e-commerce complète avec gestion de catalogue, paiement sécurisé et dashboard client
+                        </p>
+                        <div class="project-problem">
+                            <h4 data-i18n="problemTitle">Problème Résolu:</h4>
+                            <p data-i18n="project1Problem">
+                                Le client voulait digitaliser sa boutique physique et offrir une expérience d'achat moderne à ses clients
+                            </p>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projet 2: Application Web -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-mockup">
+                            <i class="fas fa-tasks" aria-hidden="true"></i>
+                        </div>
+                        <div class="project-overlay">
+                            <button class="btn btn-small" onclick="viewProject(2)" data-i18n="viewProject">
+                                <i class="fas fa-eye" aria-hidden="true"></i> Voir Détails
+                            </button>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-category" data-i18n="catWebApp">Application Web</div>
+                        <h3 class="project-name" data-i18n="project2Name">Système de Gestion de Projets</h3>
+                        <p class="project-desc" data-i18n="project2Desc">
+                            Application web de gestion de projets avec suivi de tâches, collaboration en équipe et reporting automatique
+                        </p>
+                        <div class="project-problem">
+                            <h4 data-i18n="problemTitle">Problème Résolu:</h4>
+                            <p data-i18n="project2Problem">
+                                L'entreprise avait besoin d'un outil centralisé pour gérer ses projets et améliorer la collaboration entre équipes
+                            </p>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Vue.js</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projet 3: Plateforme Médias -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-mockup">
+                            <i class="fas fa-play-circle" aria-hidden="true"></i>
+                        </div>
+                        <div class="project-overlay">
+                            <button class="btn btn-small" onclick="viewProject(3)" data-i18n="viewProject">
+                                <i class="fas fa-eye" aria-hidden="true"></i> Voir Détails
+                            </button>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-category" data-i18n="catMediaPlatform">Plateforme Média</div>
+                        <h3 class="project-name" data-i18n="project3Name">Plateforme de Streaming Vidéo</h3>
+                        <p class="project-desc" data-i18n="project3Desc">
+                            Développement d'une plateforme de streaming vidéo avec contenu premium, abonnement et système de recommandation
+                        </p>
+                        <div class="project-problem">
+                            <h4 data-i18n="problemTitle">Problème Résolu:</h4>
+                            <p data-i18n="project3Problem">
+                                Le client voulait lancer son propre service de streaming concurrent des grandes plateformes existantes
+                            </p>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Angular</span>
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">AWS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projet 4: Dashboard -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-mockup">
+                            <i class="fas fa-chart-line" aria-hidden="true"></i>
+                        </div>
+                        <div class="project-overlay">
+                            <button class="btn btn-small" onclick="viewProject(4)" data-i18n="viewProject">
+                                <i class="fas fa-eye" aria-hidden="true"></i> Voir Détails
+                            </button>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-category" data-i18n="catDashboard">Dashboard</div>
+                        <h3 class="project-name" data-i18n="project4Name">Dashboard Analytique Entreprise</h3>
+                        <p class="project-desc" data-i18n="project4Desc">
+                            Dashboard analytique pour visualiser les données métier, créer des rapports et suivre les performances en temps réel
+                        </p>
+                        <div class="project-problem">
+                            <h4 data-i18n="problemTitle">Problème Résolu:</h4>
+                            <p data-i18n="project4Problem">
+                                L'entreprise avait des données dispersées et besoin d'un outil unifié pour analyser et prendre des décisions
+                            </p>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">D3.js</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal pour voir les détails du projet -->
+    <div id="projectModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalProjectName">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalProjectName"></h3>
+                <button class="modal-close" onclick="closeModal('projectModal')" aria-label="Fermer">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="modalProjectImage"></div>
+                <p id="modalProjectDesc"></p>
+                <div class="modal-problem">
+                    <h4 data-i18n="problemTitle">Problème Résolu:</h4>
+                    <p id="modalProjectProblem"></p>
+                </div>
+                <div class="modal-tech">
+                    <h4 data-i18n="techUsed">Technologies Utilisées:</h4>
+                    <div id="modalProjectTech"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="openQuoteForm()" data-i18n="contactForProject">
+                    <i class="fas fa-envelope" aria-hidden="true"></i> Contacter pour un Projet Similaire
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notre Stack Technologique -->
+    <section id="tech-stack" class="tech-stack">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="techStackTitle">Notre Stack Technologique</h2>
+                <p class="section-subtitle" data-i18n="techStackSubtitle">
+                    Technologies modernes et robustes que nous maîtrisons pour vos projets
+                </p>
+            </div>
+            <div class="tech-grid">
+                <!-- Frontend -->
+                <div class="tech-category">
+                    <h3 class="tech-category-title" data-i18n="frontend">
+                        <i class="fas fa-desktop" aria-hidden="true"></i> Frontend
+                    </h3>
+                    <div class="tech-items">
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fab fa-html5" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">HTML5</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fab fa-css3-alt" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">CSS3</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fab fa-js" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">JavaScript</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fab fa-react" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">React</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fab fa-vuejs" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">Vue.js</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fab fa-angular" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">Angular</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backend -->
+                <div class="tech-category">
+                    <h3 class="tech-category-title" data-i18n="backend">
+                        <i class="fas fa-server" aria-hidden="true"></i> Backend
+                    </h3>
+                    <div class="tech-items">
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fab fa-node-js" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">Node.js</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fas fa-code" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">Python</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fab fa-django" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">Django</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fas fa-rocket" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">Express</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fab fa-php" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">PHP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Database -->
+                <div class="tech-category">
+                    <h3 class="tech-category-title" data-i18n="database">
+                        <i class="fas fa-database" aria-hidden="true"></i> Database
+                    </h3>
+                    <div class="tech-items">
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fas fa-database" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">MongoDB</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fas fa-server" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">PostgreSQL</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fas fa-table" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">MySQL</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fas fa-cloud" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">Firebase</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sécurité -->
+                <div class="tech-category">
+                    <h3 class="tech-category-title" data-i18n="security">
+                        <i class="fas fa-shield-alt" aria-hidden="true"></i> Sécurité
+                    </h3>
+                    <div class="tech-items">
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fas fa-linux" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">Kali Linux</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fas fa-lock" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">SSL/TLS</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fas fa-user-shield" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">OWASP</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fas fa-mask" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">Penetration Testing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cloud & DevOps -->
+                <div class="tech-category">
+                    <h3 class="tech-category-title" data-i18n="cloud">
+                        <i class="fas fa-cloud" aria-hidden="true"></i> Cloud & DevOps
+                    </h3>
+                    <div class="tech-items">
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fab fa-aws" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">AWS</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fab fa-google" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">Google Cloud</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fab fa-docker" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">Docker</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fab fa-gitlab" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">GitLab</span>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">
+                                <i class="fab fa-github" aria-hidden="true"></i>
+                            </div>
+                            <span class="tech-name">GitHub</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Témoignages et Avis Clients -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="testimonialsTitle">Témoignages Clients</h2>
+                <p class="section-subtitle" data-i18n="testimonialsSubtitle">
+                    Ce que nos partenaires disent de notre travail
+                </p>
+            </div>
+            <div class="testimonials-wrapper">
+                <div class="testimonials-carousel" id="testimonialsCarousel">
+                    <!-- Avis 1 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating" aria-label="5 étoiles sur 5">
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                        </div>
+                        <p class="testimonial-text">
+                            "Fleutech a transformé notre infrastructure informatique. Leur expertise en cybersécurité nous a permis de protéger nos données sensibles. Service professionnel et réactif!"
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">
+                                <i class="fas fa-user" aria-hidden="true"></i>
+                            </div>
+                            <div class="author-info">
+                                <h4 class="author-name">Marie Dupont</h4>
+                                <p class="author-company">CEO, TechStart France</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Avis 2 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating" aria-label="5 étoiles sur 5">
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                        </div>
+                        <p class="testimonial-text">
+                            "Notre site est magnifique et performant. Fleutech a compris nos besoins de façon exceptionnelle. Le support est excellent!"
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">
+                                <i class="fas fa-user" aria-hidden="true"></i>
+                            </div>
+                            <div class="author-info">
+                                <h4 class="author-name">Esaïe PRIME</h4>
+                                <p class="author-company">Directeur, ICME</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Avis 3 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating" aria-label="5 étoiles sur 5">
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                        </div>
+                        <p class="testimonial-text">
+                            "L'application web de gestion de projets développée par Fleutech a amélioré notre productivité de 40%. Une équipe technique compétente et à l'écoute."
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">
+                                <i class="fas fa-user" aria-hidden="true"></i>
+                            </div>
+                            <div class="author-info">
+                                <h4 class="author-name">Pierre Noel</h4>
+                                <p class="author-company">CTO, InnovateHT</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Avis 4 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating" aria-label="4,5 étoiles sur 5">
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <i class="fas fa-star-half-alt" aria-hidden="true"></i>
+                        </div>
+                        <p class="testimonial-text">
+                            "Service réseau professionnel et fiable. Depuis que Fleutech gère notre infrastructure, nous n'avons plus aucun problème. Investissement recommandé!"
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">
+                                <i class="fas fa-user" aria-hidden="true"></i>
+                            </div>
+                            <div class="author-info">
+                                <h4 class="author-name">Sophie Laurent</h4>
+                                <p class="author-company">Gérante, BureauPlus</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn prev" onclick="moveCarousel(-1)" aria-label="Témoignage précédent">
+                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                    </button>
+                    <div class="carousel-dots" id="carouselDots"></div>
+                    <button class="carousel-btn next" onclick="moveCarousel(1)" aria-label="Témoignage suivant">
+                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Blog / Actualités Tech -->
+    <section id="blog" class="blog">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="blogTitle">Blog & Actualités Tech</h2>
+                <p class="section-subtitle" data-i18n="blogSubtitle">
+                    Articles sur la sécurité informatique, le développement web et les astuces tech
+                </p>
+            </div>
+            <div class="blog-grid">
+                <!-- Article 1 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <div class="blog-category" data-i18n="catSecurity">Sécurité</div>
+                        <div class="blog-icon">
+                            <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">
+                            <a href="#">5 Mesures de Sécurité Informatique Indispensables pour Votre PME</a>
+                        </h3>
+                        <p class="blog-desc">
+                            Découvrez les 5 mesures essentielles pour protéger votre entreprise contre les cyberattaques...
+                        </p>
+                        <div class="blog-meta">
+                            <span class="blog-date"><i class="fas fa-calendar" aria-hidden="true"></i> 15 Juin 2026</span>
+                            <span class="blog-author"><i class="fas fa-user" aria-hidden="true"></i> Par Fleutech</span>
+                        </div>
+                        <a href="#" class="blog-link">
+                            <span data-i18n="readMore">Lire Plus</span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <div class="blog-category" data-i18n="catDev">Développement</div>
+                        <div class="blog-icon">
+                            <i class="fas fa-code" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">
+                            <a href="#">Pourquoi Votre Entreprise a Besoin d'un Site Web Performant en 2026</a>
+                        </h3>
+                        <p class="blog-desc">
+                            Un site web rapide et optimisé n'est plus une option, mais une nécessité pour réussir...
+                        </p>
+                        <div class="blog-meta">
+                            <span class="blog-date"><i class="fas fa-calendar" aria-hidden="true"></i> 10 Juin 2026</span>
+                            <span class="blog-author"><i class="fas fa-user" aria-hidden="true"></i> Par Fleutech</span>
+                        </div>
+                        <a href="#" class="blog-link">
+                            <span data-i18n="readMore">Lire Plus</span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <div class="blog-category" data-i18n="catWindows">Windows</div>
+                        <div class="blog-icon">
+                            <i class="fab fa-windows" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">
+                            <a href="#">10 Astuces Windows pour Optimiser la Performance de Votre PC</a>
+                        </h3>
+                        <p class="blog-desc">
+                            Améliorez la vitesse et la stabilité de votre ordinateur Windows avec ces astuces simples...
+                        </p>
+                        <div class="blog-meta">
+                            <span class="blog-date"><i class="fas fa-calendar" aria-hidden="true"></i> 5 Juin 2026</span>
+                            <span class="blog-author"><i class="fas fa-user" aria-hidden="true"></i> Par Fleutech</span>
+                        </div>
+                        <a href="#" class="blog-link">
+                            <span data-i18n="readMore">Lire Plus</span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+            <div class="blog-cta">
+                <a href="#" class="btn btn-secondary">
+                    <i class="fas fa-book" aria-hidden="true"></i> <span data-i18n="viewAllArticles">Voir Tous les Articles</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h2 class="section-title" data-i18n="contactTitle">Contactez-nous</h2>
+                    <p class="section-subtitle" data-i18n="contactSubtitle">
+                        Nous sommes là pour répondre à toutes vos questions
+                    </p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4 data-i18n="address">Adresse</h4>
+                                <p>Port-au-Prince, Ouest, Haiti</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone" aria-hidden="true"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4 data-i18n="phone">Téléphone</h4>
+                                <p>+509 55525871</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope" aria-hidden="true"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4 data-i18n="email">Email</h4>
+                                <p>infofleutech@yahoo.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://tiktok.com" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                            <i class="fab fa-tiktok" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://x.com/fleubeus509" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Twitter/X">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=61592271817120" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                            <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form-container">
+                    <form class="contact-form" name="contact-form" data-netlify="true" netlify-honeypot="bot-field">
+                        <input type="hidden" name="form-name" value="contact-form">
+                        <p class="visually-hidden">
+                            <label>Ne pas remplir si vous êtes humain : <input name="bot-field"></label>
+                        </p>
+                        <div class="form-group">
+                            <label for="contactName2" data-i18n="contactName">Nom</label>
+                            <input type="text" id="contactName2" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail2" data-i18n="contactEmail">Email</label>
+                            <input type="email" id="contactEmail2" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactSubject" data-i18n="contactSubject">Sujet</label>
+                            <input type="text" id="contactSubject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage" data-i18n="contactMessage">Message</label>
+                            <textarea id="contactMessage" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-paper-plane" aria-hidden="true"></i> <span data-i18n="sendMessage">Envoyer Message</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IA Assistant Chatbot -->
+    <!-- Formulaire invisible, jamais affiché à l'utilisateur : sert uniquement à ce que
+         Netlify détecte et enregistre les demandes envoyées via le chatbot (devis/RDV/message),
+         puisque ces données ne passent pas par un vrai <form> visible. -->
+    <form name="chatbot-lead" data-netlify="true" netlify-honeypot="bot-field" hidden>
+        <input type="hidden" name="form-name" value="chatbot-lead">
+        <input type="text" name="type">
+        <input type="text" name="name">
+        <input type="email" name="email">
+        <input type="text" name="need">
+        <input name="bot-field">
+    </form>
+
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <div class="chatbot-title">
+                <div class="chatbot-avatar">
+                    <i class="fas fa-robot" aria-hidden="true"></i>
+                </div>
+                <div class="chatbot-info">
+                    <h4>Fleub AI</h4>
+                    <p data-i18n="aiStatus">Assistant IA - En ligne</p>
+                </div>
+            </div>
+            <button class="chatbot-close" onclick="toggleChatbot()" aria-label="Fermer le chat">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="message ai-message">
+                <div class="message-avatar">
+                    <i class="fas fa-robot" aria-hidden="true"></i>
+                </div>
+                <div class="message-content">
+                    <p data-i18n="aiHello">Bonjour! Je suis Fleub l'assistant IA de Fleutech. Comment puis-je vous aider aujourd'hui?</p>
+                    <span class="message-time">...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Les 5 groupes du menu (et leurs sous-questions) sont générés
+             dynamiquement par renderChatbotMenu() dans script.js -->
+        <div class="chatbot-quick-questions" id="quickQuestions" aria-live="polite"></div>
+
+        <!-- Barre permanente : toujours visible, quel que soit l'état du chatbot
+             (menu principal, sous-menu, ou en plein formulaire devis/RDV) -->
+        <div class="chatbot-persistent-nav">
+            <button type="button" class="chatbot-nav-btn" onclick="goToChatbotMenu()">
+                <span data-i18n="chatMainMenuBtn">↩️ Menu principal</span>
+            </button>
+            <button type="button" class="chatbot-nav-btn" onclick="toggleChatbot()">
+                <span data-i18n="chatCloseBtn">❌ Fermer</span>
+            </button>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Posez votre question..." onkeypress="handleChatbotInput(event)">
+            <button class="chatbot-send" onclick="sendChatbotMessage()" aria-label="Envoyer">
+                <i class="fas fa-paper-plane" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <button class="chatbot-toggle" onclick="toggleChatbot()" aria-label="Ouvrir le chat">
+        <i class="fas fa-comment-dots" aria-hidden="true"></i>
+    </button>
+
+    <!-- Modal Booking (Calendly Integration) -->
+    <div id="bookingModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 id="bookingModalTitle" data-i18n="bookingTitle">Prendre Rendez-vous</h3>
+                <button class="modal-close" onclick="closeModal('bookingModal')" aria-label="Fermer">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="booking-intro">
+                    <p data-i18n="bookingIntro">
+                        Réservez en un clic un appel de consultation avec un de nos experts
+                    </p>
+                </div>
+                <!-- Integration Calendly -->
+                <div class="calendly-wrapper">
+                    <iframe
+                        src="https://calendly.com/infofleutech/consultation"
+                        width="100%"
+                        height="600"
+                        frameborder="0"
+                        title="Réservation de consultation Fleutech"
+                        class="calendly-iframe">
+                    </iframe>
+                </div>
+                <p class="booking-note" data-i18n="bookingNote">
+                    💡 Vous recevrez un email de confirmation immédiatement après la réservation
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Realisations Dynamique (CMS) -->
+    <section id="realizations" class="realizations">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="realizationsTitle">Mes Réalisations</h2>
+                <p class="section-subtitle" data-i18n="realizationsSubtitle">
+                    Découvrez mes projets futurs et créations récentes
+                </p>
+            </div>
+            <div id="realizationsGrid" class="realizations-grid">
+                <!-- Les réalisations seront ajoutées dynamiquement via JavaScript -->
+                <div class="loading-realizations" data-i18n="loadingProjects">
+                    <i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Chargement des projets...
+                </div>
+            </div>
+            <div class="realizations-cta" id="realizationsCta" style="display: none;">
+                <button class="btn btn-secondary" onclick="showAddRealizationForm()" data-i18n="addRealization">
+                    <i class="fas fa-plus" aria-hidden="true"></i> Ajouter une Réalisation
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulaire Ajouter Réalisation -->
+    <div id="addRealizationModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="addRealizationModalTitle">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="addRealizationModalTitle" data-i18n="addRealizationTitle">Ajouter une Réalisation</h3>
+                <button class="modal-close" onclick="closeModal('addRealizationModal')" aria-label="Fermer">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addRealizationForm" class="realization-form">
+                    <div class="form-group">
+                        <label for="realizationTitle" data-i18n="realizationTitle">Titre</label>
+                        <input type="text" id="realizationTitle" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="realizationDesc" data-i18n="realizationDesc">Description</label>
+                        <textarea id="realizationDesc" name="description" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="realizationCategory" data-i18n="realizationCategory">Catégorie</label>
+                        <select id="realizationCategory" name="category">
+                            <option value="web">Développement Web</option>
+                            <option value="security">Cybersécurité</option>
+                            <option value="network">Solutions Réseau</option>
+                            <option value="support">Support Informatique</option>
+                            <option value="other">Autre</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="realizationImage" data-i18n="realizationImage">Image (URL)</label>
+                        <input type="url" id="realizationImage" name="image" placeholder="mon.png">
+                    </div>
+                    <div class="form-group">
+                        <label for="realizationTech" data-i18n="realizationTech">Technologies (séparées par virgule)</label>
+                        <input type="text" id="realizationTech" name="tech" placeholder="React, Node.js, MongoDB">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" data-i18n="addRealizationSubmit">
+                        <i class="fas fa-plus" aria-hidden="true"></i> Ajouter
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <span class="logo-icon" aria-hidden="true">⚡</span>
+                        <span class="logo-text">Fleutech</span>
+                    </div>
+                    <p class="footer-desc" data-i18n="footerDesc">
+                        Votre partenaire de confiance pour des solutions informatiques innovantes
+                    </p>
+                    <div class="footer-social">
+                        <a href="https://wa.me/50955525871" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://x.com/fleubeus509" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Twitter/X">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=61592271817120" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-title" data-i18n="services">Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="#services" data-i18n="devWeb">Développement Web</a></li>
+                        <li><a href="#services" data-i18n="cyberSec">Cybersécurité</a></li>
+                        <li><a href="#services" data-i18n="support">Support Informatique</a></li>
+                        <li><a href="#services" data-i18n="network">Solutions Réseau</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-title" data-i18n="company">Entreprise</h4>
+                    <ul class="footer-links">
+                        <li><a href="#hero" data-i18n="home">Accueil</a></li>
+                        <li><a href="#projects" data-i18n="projects">Projets</a></li>
+                        <li><a href="#blog" data-i18n="blog">Blog</a></li>
+                        <li><a href="#contact" data-i18n="contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-title" data-i18n="contact">Contact</h4>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Port-au-Prince, Haiti</li>
+                        <li><i class="fas fa-phone" aria-hidden="true"></i> +509 55525871</li>
+                        <li><i class="fas fa-envelope" aria-hidden="true"></i> infofleutech@yahoo.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="copyright">
+                    © 2026 Fleutech. Tous droits réservés.
+                </p>
+                <div class="footer-legal">
+                    <a href="#" data-i18n="privacy">Politique de Confidentialité</a>
+                    <a href="#" data-i18n="terms">Conditions d'Utilisation</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+
+</body>
+</html>

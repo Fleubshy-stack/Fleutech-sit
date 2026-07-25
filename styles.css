@@ -1,0 +1,1231 @@
+/* ================================
+   VARIABLES GLOBALES
+   ================================ */
+:root {
+    --bg-primary: #0a0f1c;
+    --bg-secondary: #111827;
+    --bg-tertiary: #1f2937;
+    --text-primary: #f9fafb;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --accent: #00d4ff;
+    --accent-secondary: #7c3aed;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    --border: rgba(255, 255, 255, 0.08);
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.45);
+    --radius: 18px;
+    --transition: all 0.3s ease;
+    --max-width: 1200px;
+}
+
+/* ================================
+   RESET / BASE
+   ================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at top, #111827 0%, #0a0f1c 45%, #050814 100%);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+.container {
+    width: min(100% - 2rem, var(--max-width));
+    margin: 0 auto;
+}
+
+/* Respecte les utilisateurs qui préfèrent moins d'animations */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Focus clavier visible sur tous les éléments interactifs
+   (avant : les champs de formulaire avaient "outline: none" sans remplacement,
+   ce qui rendait la navigation au clavier impossible à suivre visuellement) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* ================================
+   NAVIGATION
+   ================================ */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.nav-container {
+    width: min(100% - 2rem, var(--max-width));
+    margin: 0 auto;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-weight: 800;
+    font-size: 1.2rem;
+}
+
+.logo-icon {
+    color: var(--accent);
+    font-size: 1.35rem;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.nav-link:hover {
+    color: var(--accent);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* ================================
+   BOUTONS (styles communs)
+   ================================ */
+.booking-btn,
+.lang-btn,
+.mobile-menu-btn,
+.btn,
+.quick-question-btn,
+.carousel-btn,
+.social-btn,
+.modal-close,
+.chatbot-toggle,
+.chatbot-send {
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.booking-btn,
+.btn {
+    padding: 0.9rem 1.2rem;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.booking-btn {
+    background: linear-gradient(135deg, var(--accent), #3b82f6);
+    color: #001018;
+    box-shadow: 0 10px 25px rgba(0, 212, 255, 0.25);
+}
+
+.booking-btn:hover,
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(0, 212, 255, 0.3);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent), #3b82f6);
+    color: #001018;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+    border-color: rgba(0, 212, 255, 0.5);
+    background: rgba(0, 212, 255, 0.08);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn-small {
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+}
+
+/* ================================
+   SÉLECTEUR DE LANGUE
+   ================================ */
+.language-selector {
+    position: relative;
+}
+
+.lang-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.lang-dropdown {
+    display: none;
+    position: absolute;
+    top: 56px;
+    right: 0;
+    background: #111827;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.lang-dropdown.show {
+    display: block;
+    padding: 0.8rem 1rem;
+}
+
+.lang-option {
+    display: block;
+    padding: 0.75rem 0.9rem;
+    border-radius: 10px;
+    color: var(--text-secondary);
+}
+
+.lang-option:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--accent);
+}
+
+.mobile-menu-btn {
+    display: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+/* ================================
+   HERO
+   ================================ */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 110px 0 60px;
+    overflow: hidden;
+}
+
+.network-background {
+    position: absolute;
+    inset: 0;
+    opacity: 0.55;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    width: min(100% - 2rem, var(--max-width));
+    margin: 0 auto;
+    text-align: center;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.2rem;
+    padding: 0.55rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(0, 212, 255, 0.12);
+    color: #00d4ff;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.hero-title {
+    font-size: clamp(2.6rem, 6vw, 5.2rem);
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 1.2rem;
+}
+
+.title-line {
+    display: block;
+}
+
+.highlight {
+    color: var(--accent);
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.35);
+}
+
+.hero-subtitle {
+    max-width: 720px;
+    margin: 0 auto 2rem;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.stat-item {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--accent);
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* ================================
+   SECTIONS GÉNÉRIQUES
+   ================================ */
+section {
+    padding: 90px 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 0.8rem;
+}
+
+.section-subtitle {
+    color: var(--text-secondary);
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+/* ================================
+   SERVICES (cartes qui se retournent)
+   ================================ */
+.services-grid,
+.solutions-grid,
+.projects-grid,
+.blog-grid,
+.tech-grid {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.services-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.service-card {
+    perspective: 1200px;
+    min-height: 340px;
+}
+
+.service-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.service-card:hover .service-card-inner {
+    transform: rotateY(180deg);
+}
+
+.service-card-front,
+.service-card-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+}
+
+.service-card-back {
+    transform: rotateY(180deg);
+    background: linear-gradient(180deg, rgba(0, 212, 255, 0.08), rgba(255, 255, 255, 0.03));
+}
+
+.service-icon,
+.solution-icon,
+.project-mockup,
+.blog-icon,
+.contact-icon,
+.author-avatar,
+.chatbot-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 212, 255, 0.12);
+    color: var(--accent);
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.service-name,
+.solution-name,
+.project-name,
+.blog-title,
+.tech-category-title {
+    margin-bottom: 0.8rem;
+}
+
+.service-desc-short,
+.solution-desc,
+.project-desc,
+.blog-desc {
+    color: var(--text-secondary);
+}
+
+.service-features,
+.solution-features {
+    list-style: none;
+    margin: 1rem 0 1.25rem;
+    display: grid;
+    gap: 0.65rem;
+}
+
+.service-features li,
+.solution-features li {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.flip-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent);
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+/* ================================
+   SOLUTIONS CLÉS EN MAIN
+   ================================ */
+.solutions-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.solution-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.solution-card.featured {
+    transform: translateY(-10px);
+    border-color: rgba(0, 212, 255, 0.5);
+    box-shadow: 0 20px 40px rgba(0, 212, 255, 0.12);
+}
+
+.solution-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--accent-secondary);
+    color: white;
+    padding: 0.4rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+}
+
+.featured-badge {
+    background: var(--accent);
+    color: #001018;
+}
+
+.solution-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin: 1rem 0;
+}
+
+.price-amount {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+}
+
+.price-period {
+    color: var(--text-muted);
+}
+
+/* ================================
+   FORMULAIRE DE DEVIS
+   ================================ */
+.quote-form-container {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-lg);
+}
+
+.quote-progress {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.progress-step {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--text-muted);
+}
+
+.progress-step.active {
+    color: var(--accent);
+}
+
+.step-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border);
+}
+
+.quote-step {
+    display: none;
+}
+
+.quote-step.active {
+    display: block;
+}
+
+.service-selection,
+.needs-selection {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.service-option,
+.needs-option {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.03);
+    cursor: pointer;
+}
+
+.service-option input,
+.needs-option input {
+    /* Case à cocher masquée visuellement ; l'icône `.service-checkbox`/`.needs-checkbox`
+       sert d'indicateur visuel. Le clavier reste géré via le <label> englobant. */
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+}
+
+.service-checkbox,
+.needs-checkbox {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 212, 255, 0.12);
+    color: var(--accent);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.95rem 1rem;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: rgba(10, 15, 28, 0.9);
+    color: var(--text-primary);
+}
+
+/* Cache visuellement le champ anti-spam Netlify sans le retirer de l'accessibilité/formulaire */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15);
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* ================================
+   PROJETS
+   ================================ */
+.projects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.project-card,
+.blog-card,
+.tech-category,
+.testimonial-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.project-image {
+    position: relative;
+    min-height: 220px;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.12), rgba(124, 58, 237, 0.1));
+    display: grid;
+    place-items: center;
+}
+
+.project-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.project-card:hover .project-overlay,
+.project-card:focus-within .project-overlay {
+    opacity: 1;
+}
+
+.project-content,
+.blog-content {
+    padding: 1.3rem;
+}
+
+.project-category,
+.blog-category {
+    display: inline-block;
+    margin-bottom: 0.75rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(0, 212, 255, 0.12);
+    color: var(--accent);
+    font-size: 0.8rem;
+}
+
+.project-problem {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-left: 3px solid var(--accent);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+}
+
+.project-tech {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tech-tag {
+    padding: 0.4rem 0.65rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+}
+
+/* ================================
+   STACK TECHNOLOGIQUE
+   ================================ */
+.tech-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tech-category {
+    padding: 1.4rem;
+}
+
+.tech-items {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.9rem;
+}
+
+.tech-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.tech-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    margin: 0 auto 0.7rem;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 212, 255, 0.12);
+    color: var(--accent);
+    font-size: 1.3rem;
+}
+
+/* ================================
+   TÉMOIGNAGES
+   ================================ */
+.testimonials-carousel {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    overflow: hidden;
+}
+
+.testimonial-card {
+    padding: 1.5rem;
+}
+
+.testimonial-rating {
+    color: #fbbf24;
+    margin-bottom: 1rem;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.25rem;
+}
+
+.carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.carousel-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.carousel-dots {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+}
+
+.carousel-dot.active {
+    background: var(--accent);
+}
+
+/* ================================
+   BLOG
+   ================================ */
+.blog-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.blog-image {
+    min-height: 180px;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.14), rgba(0, 212, 255, 0.11));
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+.blog-icon {
+    margin: 0;
+}
+
+.blog-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent);
+    margin-top: 1rem;
+}
+
+/* ================================
+   CONTACT
+   ================================ */
+.contact-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.contact-details {
+    display: grid;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+}
+
+.social-links,
+.footer-social {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.social-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.social-btn:hover {
+    background: var(--accent);
+    color: #001018;
+}
+
+/* ================================
+   CHATBOT IA
+   ================================ */
+.chatbot-toggle {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+    color: white;
+    box-shadow: var(--shadow-lg);
+    z-index: 1200;
+}
+
+.chatbot-container {
+    position: fixed;
+    right: 20px;
+    bottom: 90px;
+    width: 360px;
+    max-width: calc(100vw - 40px);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    z-index: 1200;
+    display: none;
+}
+
+.chatbot-container.open {
+    display: block;
+}
+
+.chatbot-header,
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.chatbot-title {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.chatbot-messages {
+    height: 300px;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.message {
+    display: flex;
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+}
+
+.ai-message .message-content {
+    background: rgba(0, 212, 255, 0.08);
+    padding: 0.8rem 1rem;
+    border-radius: 14px;
+}
+
+.chatbot-quick-questions {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0 1rem 1rem;
+    flex-wrap: wrap;
+}
+
+/* Bouton "question rapide" : toutes les règles regroupées ici
+   (avant, elles étaient réparties en deux blocs séparés, et l'effet de survol
+   était enfermé dans une media query mobile, donc invisible sur ordinateur) */
+.quick-question-btn {
+    position: relative;
+    overflow: hidden;
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
+    will-change: transform;
+}
+
+.quick-question-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.18) 50%, transparent 100%);
+    transform: translateX(-120%);
+    transition: transform 0.55s ease;
+}
+
+.quick-question-btn:active {
+    transform: translateY(-1px) scale(0.99);
+}
+
+/* Barre permanente "↩️ Menu principal / ❌ Fermer" — toujours visible,
+   quel que soit l'état du chatbot (menu, sous-menu, ou formulaire en cours) */
+.chatbot-persistent-nav {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0 1rem 0.75rem;
+}
+
+.chatbot-nav-btn {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    border-radius: 999px;
+    background: transparent;
+    border: 1px dashed var(--border);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.chatbot-nav-btn:hover {
+    border-color: rgba(0, 212, 255, 0.5);
+    color: var(--accent);
+}
+
+/* Le survol ne s'active que sur les appareils qui ont une vraie souris :
+   évite l'effet "collé" au doigt une fois qu'on a tapé sur mobile/tactile */
+@media (hover: hover) and (pointer: fine) {
+    .quick-question-btn:hover {
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 12px 24px rgba(0, 212, 255, 0.18);
+    }
+
+    .quick-question-btn:hover::before {
+        transform: translateX(120%);
+    }
+}
+
+.chatbot-input {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.chatbot-input input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border-radius: 14px;
+    background: rgba(10, 15, 28, 0.9);
+    border: 1px solid var(--border);
+    color: white;
+}
+
+.chatbot-send {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: var(--accent);
+    color: #001018;
+}
+
+/* ================================
+   MODALES
+   ================================ */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1300;
+    padding: 1rem;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    width: min(100%, 760px);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    box-shadow: var(--shadow-lg);
+}
+
+.modal-large {
+    width: min(100%, 1000px);
+}
+
+.modal-body {
+    padding: 1.2rem;
+}
+
+/* ================================
+   FOOTER
+   ================================ */
+.footer {
+    padding: 50px 0 25px;
+    border-top: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.footer-title {
+    margin-bottom: 1rem;
+}
+
+.footer-links {
+    list-style: none;
+    display: grid;
+    gap: 0.7rem;
+    color: var(--text-secondary);
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+}
+
+/* ================================
+   RÉALISATIONS
+   ================================ */
+.realizations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.realization-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+}
+
+/* ================================
+   RESPONSIVE
+   ================================ */
+@media (max-width: 1100px) {
+    .services-grid,
+    .tech-grid,
+    .footer-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .solutions-grid,
+    .projects-grid,
+    .blog-grid,
+    .contact-wrapper,
+    .realizations-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 800px) {
+    .nav-menu {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: inline-grid;
+        place-items: center;
+    }
+
+    .hero-stats,
+    .service-selection,
+    .needs-selection,
+    .tech-items {
+        grid-template-columns: 1fr;
+    }
+
+    .chatbot-container {
+        width: calc(100vw - 24px);
+        right: 12px;
+        bottom: 84px;
+    }
+}
+
+@media (max-width: 560px) {
+    .hero-buttons,
+    .form-buttons,
+    .carousel-controls {
+        flex-direction: column;
+    }
+
+    .booking-btn span {
+        display: none;
+    }
+
+    /* Corrigé : ".section" ne correspondait à aucun élément du HTML
+       (les sections sont des balises <section>, pas des éléments class="section") */
+    section {
+        padding: 70px 0;
+    }
+}
