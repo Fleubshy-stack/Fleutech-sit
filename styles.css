@@ -92,6 +92,12 @@ textarea:focus-visible {
     z-index: 1000;
 }
 
+img.logo-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
 .nav-container {
     width: min(100% - 2rem, var(--max-width));
     margin: 0 auto;
