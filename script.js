@@ -322,12 +322,8 @@ const translations = {
 };
 
 // ================================
-// MENU PRO DU CHATBOT — 5 groupes de questions
+// MENU DU CHATBOT — 5 groupes de questions
 // ================================
-// Structure : chaque groupe a un libellé (bouton de niveau 1) et une liste
-// de sous-questions (boutons de niveau 2). Cliquer un groupe affiche ses
-// sous-questions ; cliquer une sous-question donne la réponse puis revient
-// automatiquement au menu principal.
 const mainMenu = {
   webdev: {
     icon: "fa-store",
@@ -628,11 +624,12 @@ let chatbotOpen = false;
 // ⚠️ IMPORTANT : ceci n'est PAS une vraie sécurité — c'est un site statique sans
 // serveur, donc le mot de passe ci-dessous est visible par quiconque regarde le
 // code source (touche F12). Ça bloque un visiteur normal, pas quelqu'un de
-// technique. Pour une vraie protection, il faudrait un système comme Netlify
-// Identity + un CMS (Decap CMS par exemple).
-const REALIZATIONS_ADMIN_PASSWORD = "ChangeCeMotDePasse2026"; // <- remplace par ton propre mot de passe
+// technique.
+const REALIZATIONS_ADMIN_PASSWORD = "@Admin1234"; // <- remplace par ton propre mot de passe
 let isRealizationsAdmin = sessionStorage.getItem("fleutech-admin") === "true";
 
+// Chaque réalisation peut avoir un champ "image" : soit un lien vers une photo
+// que tu as uploadée dans le dépôt GitHub (ex: "images/projet1.jpg"), soit vide.
 let realizations = [
     {
         title: "Plateforme e-commerce premium",
@@ -733,8 +730,6 @@ function netlifyEncode(data) {
 }
 
 // Envoie des données à Netlify Forms sans recharger la page.
-// formName doit correspondre exactement au name="..." déclaré sur un <form> statique du HTML
-// (c'est ce qui permet à Netlify de "voir" le formulaire au moment du déploiement).
 function submitToNetlify(formName, fields) {
     return fetch("/", {
         method: "POST",
@@ -823,17 +818,12 @@ function applyLanguage(lang) {
         if (t[key] !== undefined) el.textContent = t[key];
     });
 
-    // Renommé pour ne plus masquer la variable globale `currentLang`
     const langBtnEl = document.getElementById("currentLang");
     if (langBtnEl) langBtnEl.textContent = lang.toUpperCase();
 
     renderChatbotMenu();
 }
 
-// Dessine soit les 5 boutons de groupe (niveau "main"), soit les sous-questions
-// du groupe sélectionné (niveau "sub"). Pendant un formulaire actif, n'affiche
-// rien ici : seule la barre "↩️ Menu principal / ❌ Fermer" (fixe dans le HTML)
-// reste visible, pour laisser la place à la saisie libre (nom, email, besoin).
 function renderChatbotMenu() {
     const container = document.getElementById("quickQuestions");
     if (!container) return;
@@ -859,7 +849,6 @@ function renderChatbotMenu() {
         return;
     }
 
-    // Niveau "main" : les 5 groupes du menu principal
     Object.entries(mainMenu).forEach(([key, group]) => {
         const btn = document.createElement("button");
         btn.type = "button";
@@ -871,8 +860,6 @@ function renderChatbotMenu() {
     });
 }
 
-// Branche le clic sur les boutons du menu — ils n'avaient aucun
-// gestionnaire d'événement avant, donc cliquer dessus ne faisait rien.
 function setupChatbotMenu() {
     const container = document.getElementById("quickQuestions");
     if (!container) return;
@@ -890,8 +877,6 @@ function setupChatbotMenu() {
     });
 }
 
-// Ouvre un groupe : montre le choix de l'utilisateur, le message d'accueil
-// propre à ce groupe, puis affiche ses sous-questions.
 function openMenuGroup(groupKey) {
     const group = mainMenu[groupKey];
     if (!group) return;
@@ -904,10 +889,6 @@ function openMenuGroup(groupKey) {
     renderChatbotMenu();
 }
 
-// L'utilisateur choisit une sous-question précise. Si elle nécessite un petit
-// formulaire (devis / rendez-vous / message), on lance la collecte en 3 étapes ;
-// sinon on donne la réponse (+ action éventuelle : scroll, WhatsApp) puis on
-// revient au menu principal pour continuer la conversation.
 function askMenuQuestion(groupKey, questionKey) {
     const question = mainMenu[groupKey]?.questions?.[questionKey];
     if (!question) return;
@@ -931,8 +912,9 @@ function askMenuQuestion(groupKey, questionKey) {
             window.open("https://wa.me/50955525871", "_blank", "noopener");
         }
 
-        const more = chatbotStrings[currentLang]?.menuMore || chatbotStrings.
-        r.menuMore;
+        // Corrigé : c'était "chatbotStrings.\n  r.menuMore" (cassé, référençait
+        // une clé "r" inexistante) — remis en "chatbotStrings.fr.menuMore".
+        const more = chatbotStrings[currentLang]?.menuMore || chatbotStrings.fr.menuMore;
         setTimeout(() => addMessage("ai", more), 500);
     }, 500);
 
@@ -940,8 +922,6 @@ function askMenuQuestion(groupKey, questionKey) {
     renderChatbotMenu();
 }
 
-// Fait défiler la page jusqu'à une section donnée (utilisé par les actions
-// "portfolio" et "grille tarifaire" du menu du chatbot)
 function scrollToSection(id) {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -950,10 +930,6 @@ function scrollToSection(id) {
 // ================================
 // FORMULAIRE EN 3 ÉTAPES DU CHATBOT (devis / rendez-vous / message rapide)
 // ================================
-// Démarre la collecte : nom → email → besoin, une question à la fois.
-// Pendant ce temps, les réponses tapées dans le champ de texte du chat
-// sont interceptées par sendChatbotMessage() (voir plus bas) au lieu
-// d'être envoyées à generateAIResponse().
 function startLeadForm(formType, contextLabel) {
     chatbotFormState = { active: true, type: formType, contextLabel, step: 0, data: {} };
     renderChatbotMenu();
@@ -969,7 +945,6 @@ function askNextFormStep() {
     setTimeout(() => addMessage("ai", step.prompt[currentLang] || step.prompt.fr), 400);
 }
 
-// Traite la réponse tapée par l'utilisateur pour l'étape en cours du formulaire.
 function handleLeadFormInput(text) {
     const step = leadFormSteps[chatbotFormState.step];
     if (!step) return;
@@ -984,9 +959,6 @@ function handleLeadFormInput(text) {
     }
 }
 
-// Une fois les 3 étapes complétées : envoie la demande à Netlify Forms
-// (via le formulaire caché "chatbot-lead" déclaré dans index.html),
-// affiche un message de confirmation, puis revient au menu.
 function finalizeLeadForm() {
     const { type, contextLabel, data } = chatbotFormState;
     const ctx = contextLabel?.[currentLang] || contextLabel?.fr || "";
@@ -1005,8 +977,6 @@ function finalizeLeadForm() {
     }, 600);
 }
 
-// Bouton permanent "↩️ Menu principal" : annule un formulaire éventuellement
-// en cours et revient toujours au menu à 5 groupes.
 function goToChatbotMenu() {
     chatbotFormState = { active: false, type: null, contextLabel: null, step: 0, data: {} };
     chatbotMenuState = { level: "main", group: null };
@@ -1115,19 +1085,14 @@ function submitQuote() {
 
     estimate += needs.length * 150;
 
-    // Devise en $ pour rester cohérent avec le reste du site (packs, budgets)
     document.getElementById("estimateAmount").textContent = `${estimate}$ - ${estimate + 300}$`;
 
-    // Envoie la demande complète à Netlify Forms (Michel la reçoit par email)
     const data = new FormData(form);
     const fields = Object.fromEntries(data.entries());
     fields.services = services.join(", ");
     fields.needs = needs.join(", ");
     fields.estimate = `${estimate}$ - ${estimate + 300}$`;
-    submitToNetlify("quote-form", fields).catch(() => {
-        // La demande reste visible à l'écran (étape 4) même si l'envoi échoue ;
-        // on ne bloque pas l'utilisateur pour une erreur réseau silencieuse.
-    });
+    submitToNetlify("quote-form", fields).catch(() => {});
 
     nextStep(4);
 }
@@ -1137,7 +1102,6 @@ function resetQuoteForm() {
     nextStep(1);
 }
 
-// Pré-coche la case du service concerné quand on clique "Plus d'infos" sur une carte de service
 function openQuoteForm(service = "") {
     const modal = document.getElementById("bookingModal");
     if (modal) modal.classList.remove("show");
@@ -1267,6 +1231,14 @@ function generateAIResponse(message) {
 // ================================
 // RÉALISATIONS DYNAMIQUES
 // ================================
+
+// Empêche l'injection de code via un titre/description — protège tous les visiteurs.
+function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str ?? "";
+    return div.innerHTML;
+}
+
 function renderRealizations() {
     const grid = document.getElementById("realizationsGrid");
     if (!grid) return;
@@ -1275,12 +1247,17 @@ function renderRealizations() {
     realizations.forEach((item, index) => {
         const card = document.createElement("div");
         card.className = "realization-card";
+        // Affiche la photo si le champ "image" contient un chemin (ex: "images/projet1.jpg")
+        const imageHtml = item.image
+            ? `<img src="${item.image}" alt="${escapeHtml(item.title)}" class="realization-image">`
+            : "";
         card.innerHTML = `
-            <h3>${item.title}</h3>
-            <p>${item.description}</p>
-            <div class="project-category">${item.category}</div>
+            ${imageHtml}
+            <h3>${escapeHtml(item.title)}</h3>
+            <p>${escapeHtml(item.description)}</p>
+            <div class="project-category">${escapeHtml(item.category)}</div>
             <div class="project-tech">
-                ${item.tech.map(t => `<span class="tech-tag">${t}</span>`).join("")}
+                ${item.tech.map(t => `<span class="tech-tag">${escapeHtml(t)}</span>`).join("")}
             </div>
             ${isRealizationsAdmin ? `<button class="btn btn-secondary btn-small" onclick="removeRealization(${index})">Supprimer</button>` : ""}
         `;
@@ -1320,8 +1297,6 @@ function removeRealization(index) {
 // ================================
 // UTILITAIRES
 // ================================
-
-// Remplit et ouvre la modale de détail projet (était coupée / incomplète)
 function viewProject(id) {
     const project = projectsData[id];
     if (!project) return;
