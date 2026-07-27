@@ -52,6 +52,12 @@ img {
     display: block;
 }
 
+img.logo-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
 .container {
     width: min(100% - 2rem, var(--max-width));
     margin: 0 auto;
@@ -90,12 +96,6 @@ textarea:focus-visible {
     left: 0;
     width: 100%;
     z-index: 1000;
-}
-
-img.logo-icon {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
 }
 
 .nav-container {
@@ -1173,6 +1173,16 @@ section {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 1.2rem;
+    overflow: hidden;
+}
+
+.realization-image {
+    width: calc(100% + 2.4rem);
+    margin: -1.2rem -1.2rem 1rem;
+    max-width: none;
+    height: 180px;
+    object-fit: cover;
+    display: block;
 }
 
 /* ================================
