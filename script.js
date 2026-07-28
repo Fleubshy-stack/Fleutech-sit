@@ -82,6 +82,10 @@ const translations = {
         frontend: "Frontend", backend: "Backend", database: "Database", security: "Sécurité", cloud: "Cloud & DevOps",
 
         testimonialsTitle: "Témoignages Clients", testimonialsSubtitle: "Ce que nos partenaires disent de notre travail",
+        leaveReview: "Laisser un avis", leaveReviewTitle: "Laisser un avis",
+        leaveReviewNote: "Votre avis sera visible sur le site après une courte validation par notre équipe.",
+        testimonialCompany: "Entreprise / Fonction (optionnel)", testimonialRating: "Note",
+        testimonialText: "Votre avis", submitReview: "Envoyer mon avis",
 
         blogTitle: "Blog & Actualités Tech",
         blogSubtitle: "Articles sur la sécurité informatique, le développement web et les astuces tech",
@@ -186,6 +190,10 @@ const translations = {
         frontend: "Frontend", backend: "Backend", database: "Database", security: "Security", cloud: "Cloud & DevOps",
 
         testimonialsTitle: "Client Reviews", testimonialsSubtitle: "What our partners say about our work",
+        leaveReview: "Leave a review", leaveReviewTitle: "Leave a review",
+        leaveReviewNote: "Your review will appear on the site after a quick check by our team.",
+        testimonialCompany: "Company / Role (optional)", testimonialRating: "Rating",
+        testimonialText: "Your review", submitReview: "Submit my review",
 
         blogTitle: "Tech Blog & News",
         blogSubtitle: "Articles on IT security, web development, and tech tips",
@@ -290,6 +298,10 @@ const translations = {
         frontend: "Frontend", backend: "Backend", database: "Baz Done", security: "Sekirite", cloud: "Cloud & DevOps",
 
         testimonialsTitle: "Temwayaj Kliyan", testimonialsSubtitle: "Sa patnè nou yo di sou travay nou",
+        leaveReview: "Kite yon avi", leaveReviewTitle: "Kite yon avi",
+        leaveReviewNote: "Avi ou ap parèt sou sit la apre yon ti verifikasyon ekip nou fè.",
+        testimonialCompany: "Antrepriz / Fonksyon (opsyonèl)", testimonialRating: "Nòt",
+        testimonialText: "Avi ou", submitReview: "Voye avi mwen",
 
         blogTitle: "Blog & Aktyalite Tech",
         blogSubtitle: "Atik sou sekirite enfòmatik, devlopman web ak konsèy tech",
@@ -668,10 +680,12 @@ async function loadRealizations() {
 document.addEventListener("DOMContentLoaded", () => {
     initLanguage();
     initNetworkAnimation();
-    initTestimonialsCarousel();
     checkAdminAccess();
     updateAdminUI();
     loadRealizations();
+    loadTestimonials();
+    setupTestimonialForm();
+    loadPendingTestimonials();
     initChatbot();
     initForms();
     setupNavigation();
@@ -1120,23 +1134,198 @@ function setupModalClose() {
 }
 
 // ================================
-// TÉMOIGNAGES CAROUSEL
+// TÉMOIGNAGES — chargés depuis le backend, soumission publique, modération admin
 // ================================
-function initTestimonialsCarousel() {
+let testimonialCarouselInterval = null;
+
+// Génère les étoiles (pleines / demi / vides) pour une note donnée
+function starsHtml(rating) {
+    const r = Math.max(0, Math.min(5, Number(rating) || 0));
+    const full = Math.floor(r);
+    const half = r - full >= 0.5 ? 1 : 0;
+    const empty = 5 - full - half;
+    let html = "";
+    for (let i = 0; i < full; i++) html += '<i class="fas fa-star" aria-hidden="true"></i>';
+    if (half) html += '<i class="fas fa-star-half-alt" aria-hidden="true"></i>';
+    for (let i = 0; i < empty; i++) html += '<i class="far fa-star" aria-hidden="true"></i>';
+    return html;
+}
+
+// Dessine les avis approuvés dans le carrousel + reconstruit les points + relance la rotation
+function renderTestimonials(list) {
     const carousel = document.getElementById("testimonialsCarousel");
     const dotsContainer = document.getElementById("carouselDots");
     if (!carousel || !dotsContainer) return;
 
-    const cards = carousel.children;
-    for (let i = 0; i < cards.length; i++) {
+    carousel.innerHTML = "";
+    dotsContainer.innerHTML = "";
+
+    list.forEach((item, i) => {
+        const card = document.createElement("div");
+        card.className = "testimonial-card";
+        card.innerHTML = `
+            <div class="testimonial-rating" aria-label="${item.rating} étoiles sur 5">${starsHtml(item.rating)}</div>
+            <p class="testimonial-text">${escapeHtml(item.text)}</p>
+            <div class="testimonial-author">
+                <div class="author-avatar"><i class="fas fa-user" aria-hidden="true"></i></div>
+                <div class="author-info">
+                    <h4 class="author-name">${escapeHtml(item.name)}</h4>
+                    ${item.company ? `<p class="author-company">${escapeHtml(item.company)}</p>` : ""}
+                </div>
+            </div>
+        `;
+        carousel.appendChild(card);
+
         const dot = document.createElement("div");
         dot.className = `carousel-dot ${i === 0 ? "active" : ""}`;
         dot.addEventListener("click", () => showTestimonial(i));
         dotsContainer.appendChild(dot);
+    });
+
+    if (testimonialCarouselInterval) clearInterval(testimonialCarouselInterval);
+    if (list.length > 0) {
+        showTestimonial(0);
+        testimonialCarouselInterval = setInterval(() => moveCarousel(1), 6000);
+    }
+}
+
+// Récupère les avis déjà validés depuis le backend
+async function loadTestimonials() {
+    try {
+        const res = await fetch("/.netlify/functions/testimonials");
+        const list = await res.json();
+        renderTestimonials(list);
+    } catch (err) {
+        console.error("Impossible de charger les témoignages :", err);
+    }
+}
+
+function showAddTestimonialForm() {
+    document.getElementById("addTestimonialModal").classList.add("show");
+}
+
+// Envoie l'avis d'un client au backend — il reste invisible tant qu'un admin
+// ne l'a pas approuvé (protection contre le spam et les faux avis).
+function setupTestimonialForm() {
+    const form = document.getElementById("addTestimonialForm");
+    if (!form) return;
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const data = new FormData(form);
+
+        // Anti-spam : ce champ doit rester vide (les robots le remplissent, pas les humains)
+        if (data.get("honeypot")) {
+            form.reset();
+            closeModal("addTestimonialModal");
+            return;
+        }
+
+        const newTestimonial = {
+            name: data.get("name"),
+            company: data.get("company"),
+            rating: Number(data.get("rating")),
+            text: data.get("text")
+        };
+
+        try {
+            const res = await fetch("/.netlify/functions/testimonials", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ testimonial: newTestimonial })
+            });
+
+            if (!res.ok) {
+                alert("Votre avis n'a pas pu être envoyé (vérifiez la longueur de votre texte : 500 caractères max).");
+                return;
+            }
+
+            form.reset();
+            closeModal("addTestimonialModal");
+            alert(
+                currentLang === "en" ? "Thank you! Your review will appear after a quick check by our team." :
+                currentLang === "ht" ? "Mèsi! Avi ou ap parèt apre yon ti verifikasyon." :
+                "Merci ! Votre avis apparaîtra après une courte vérification par notre équipe."
+            );
+        } catch (err) {
+            alert("Erreur réseau — réessaie dans un instant.");
+        }
+    });
+}
+
+// ---- Modération (visible seulement en mode admin, même mot de passe que les réalisations) ----
+
+async function loadPendingTestimonials() {
+    const panel = document.getElementById("testimonialModeration");
+    const list = document.getElementById("pendingTestimonialsList");
+    if (!panel || !list) return;
+
+    if (!adminKey) {
+        panel.style.display = "none";
+        return;
     }
 
-    showTestimonial(0);
-    setInterval(() => moveCarousel(1), 6000);
+    try {
+        const res = await fetch("/.netlify/functions/testimonials?pending=1", {
+            headers: { "X-Admin-Key": adminKey }
+        });
+        if (!res.ok) {
+            panel.style.display = "none";
+            return;
+        }
+        const pending = await res.json();
+
+        if (pending.length === 0) {
+            panel.style.display = "none";
+            return;
+        }
+
+        panel.style.display = "block";
+        list.innerHTML = "";
+        pending.forEach((item) => {
+            const card = document.createElement("div");
+            card.className = "pending-testimonial-card";
+            card.innerHTML = `
+                <div class="testimonial-rating">${starsHtml(item.rating)}</div>
+                <p>${escapeHtml(item.text)}</p>
+                <strong>${escapeHtml(item.name)}</strong> ${item.company ? `— ${escapeHtml(item.company)}` : ""}
+                <div class="pending-actions">
+                    <button class="btn btn-primary btn-small" onclick="approveTestimonial('${item.id}')">Approuver</button>
+                    <button class="btn btn-secondary btn-small" onclick="rejectTestimonial('${item.id}')">Rejeter</button>
+                </div>
+            `;
+            list.appendChild(card);
+        });
+    } catch (err) {
+        console.error("Impossible de charger les avis en attente :", err);
+    }
+}
+
+async function approveTestimonial(id) {
+    try {
+        await fetch("/.netlify/functions/testimonials", {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ adminKey, id, action: "approve" })
+        });
+        loadPendingTestimonials();
+        loadTestimonials();
+    } catch (err) {
+        alert("Erreur réseau — réessaie dans un instant.");
+    }
+}
+
+async function rejectTestimonial(id) {
+    try {
+        await fetch("/.netlify/functions/testimonials", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ adminKey, id })
+        });
+        loadPendingTestimonials();
+    } catch (err) {
+        alert("Erreur réseau — réessaie dans un instant.");
+    }
 }
 
 function showTestimonial(index) {
@@ -1151,6 +1340,7 @@ function showTestimonial(index) {
 
 function moveCarousel(direction) {
     const total = document.getElementById("testimonialsCarousel").children.length;
+    if (total === 0) return;
     currentTestimonialIndex = (currentTestimonialIndex + direction + total) % total;
     showTestimonial(currentTestimonialIndex);
 }
