@@ -1,18 +1,16 @@
 // ================================================================
 // FONCTION SERVEUR — gestion de "Mes Réalisations"
 // ================================================================
-// C'est ça, le vrai "backend" : ce code tourne sur les serveurs de Netlify
-// (pas dans le navigateur du visiteur), et sauvegarde les données dans
-// Netlify Blobs — un espace de stockage clé/valeur inclus avec ton compte.
+// Ce code tourne sur les serveurs de Netlify (pas dans le navigateur du
+// visiteur), et sauvegarde les données dans Netlify Blobs.
 //
 // GET    → renvoie la liste actuelle des réalisations
 // POST   → ajoute une réalisation (mot de passe requis)
 // DELETE → supprime une réalisation par son index (mot de passe requis)
 //
 // Le mot de passe attendu vient de la variable d'environnement ADMIN_SECRET,
-// à configurer dans Netlify (voir les instructions données à côté) — il
-// n'apparaît JAMAIS dans le code déployé, donc invisible pour un visiteur
-// qui inspecterait le site (contrairement à l'ancienne version).
+// à configurer dans Netlify (Project configuration → Environment variables).
+// Il n'apparaît JAMAIS dans le code déployé.
 
 import { getStore } from "@netlify/blobs";
 

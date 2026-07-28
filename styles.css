@@ -1176,6 +1176,19 @@ section {
     overflow: hidden;
 }
 
+.realization-card {
+    overflow: hidden;
+}
+
+.realization-image {
+    width: calc(100% + 2.4rem);
+    margin: -1.2rem -1.2rem 1rem;
+    max-width: none;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
 .realization-image {
     width: calc(100% + 2.4rem);
     margin: -1.2rem -1.2rem 1rem;

@@ -104,7 +104,7 @@ const translations = {
         realizationsSubtitle: "Découvrez mes projets futurs et créations récentes",
         loadingProjects: "Chargement des projets...", addRealization: "Ajouter une Réalisation",
         addRealizationTitle: "Ajouter une Réalisation", realizationTitle: "Titre", realizationDesc: "Description",
-        realizationCategory: "Catégorie", realizationImage: "Image (URL)",
+        realizationCategory: "Catégorie", realizationImage: "Photo (JPG/PNG)",
         realizationTech: "Technologies (séparées par virgule)", addRealizationSubmit: "Ajouter",
 
         footerDesc: "Votre partenaire de confiance pour des solutions informatiques innovantes",
@@ -208,7 +208,7 @@ const translations = {
         realizationsSubtitle: "Discover my upcoming projects and recent creations",
         loadingProjects: "Loading projects...", addRealization: "Add a Project",
         addRealizationTitle: "Add a Project", realizationTitle: "Title", realizationDesc: "Description",
-        realizationCategory: "Category", realizationImage: "Image (URL)",
+        realizationCategory: "Category", realizationImage: "Photo (JPG/PNG)",
         realizationTech: "Technologies (comma separated)", addRealizationSubmit: "Add",
 
         footerDesc: "Your trusted partner for innovative IT solutions",
@@ -312,7 +312,7 @@ const translations = {
         realizationsSubtitle: "Dekouvri pwojè m ap vin fè ak kreyasyon resan yo",
         loadingProjects: "N ap chaje pwojè yo...", addRealization: "Ajoute yon Reyalizasyon",
         addRealizationTitle: "Ajoute yon Reyalizasyon", realizationTitle: "Tit", realizationDesc: "Deskripsyon",
-        realizationCategory: "Kategori", realizationImage: "Imaj (URL)",
+        realizationCategory: "Kategori", realizationImage: "Foto (JPG/PNG)",
         realizationTech: "Teknoloji (separe ak vigil)", addRealizationSubmit: "Ajoute",
 
         footerDesc: "Patnè ou fè konfyans pou solisyon enfòmatik inovatè",
@@ -620,63 +620,48 @@ let currentQuoteStep = 1;
 let currentTestimonialIndex = 0;
 let chatbotOpen = false;
 
-// Mode administrateur pour "Mes Réalisations" : caché pour tout le monde par défaut.
-// ⚠️ IMPORTANT : ceci n'est PAS une vraie sécurité — c'est un site statique sans
-// serveur, donc le mot de passe ci-dessous est visible par quiconque regarde le
-// code source (touche F12). Ça bloque un visiteur normal, pas quelqu'un de
-// technique.
-const REALIZATIONS_ADMIN_PASSWORD = "@Admin1234"; // <- remplace par ton propre mot de passe
-let isRealizationsAdmin = sessionStorage.getItem("fleutech-admin") === "true";
+// Mode administrateur pour "Mes Réalisations".
+// Le mot de passe n'est PLUS comparé ici dans le navigateur — il est envoyé à la
+// fonction serveur (netlify/functions/realizations.mjs) qui le compare à une
+// variable d'environnement secrète (ADMIN_SECRET), invisible dans le code du site.
+let adminKey = sessionStorage.getItem("fleutech-admin-key") || null;
 
-// Chaque réalisation peut avoir un champ "image" : soit un lien vers une photo
-// que tu as uploadée dans le dépôt GitHub (ex: "images/projet1.jpg"), soit vide.
-let realizations = [
-    {
-        title: "Plateforme e-commerce premium",
-        description: "Création d'une boutique en ligne moderne avec paiement sécurisé et gestion des commandes.",
-        category: "web",
-        tech: ["React", "Node.js", "Stripe"],
-        image: ""
-    },
-    {
-        title: "Audit cybersécurité PME",
-        description: "Identification des vulnérabilités et mise en place de protections avancées.",
-        category: "security",
-        tech: ["Kali Linux", "OWASP", "Nmap"],
-        image: ""
-    },
-    {
-        title: "Dashboard de supervision",
-        description: "Tableau de bord pour suivre les incidents techniques en temps réel.",
-        category: "support",
-        tech: ["JavaScript", "API REST", "Chart.js"],
-        image: ""
-    }
-];
+// Chargé au démarrage depuis le vrai backend (voir loadRealizations)
+let realizations = [];
 
-// Ouvre https://tonsite.netlify.app/?admin=1 pour voir apparaître le prompt de mot de passe.
-// Une fois déverrouillé, ça reste actif pour cet onglet jusqu'à fermeture (sessionStorage).
+// Ouvre https://fleutech.digital/?admin=1 pour voir apparaître le prompt de mot de passe.
 function checkAdminAccess() {
-    if (isRealizationsAdmin) return;
+    if (adminKey) return;
     if (!location.search.includes("admin=1")) return;
 
     const password = prompt("Mot de passe administrateur :");
     if (password === null) return;
 
-    if (password === REALIZATIONS_ADMIN_PASSWORD) {
-        isRealizationsAdmin = true;
-        sessionStorage.setItem("fleutech-admin", "true");
-        updateAdminUI();
-        renderRealizations();
-    } else {
-        alert("Mot de passe incorrect.");
-    }
+    adminKey = password;
+    sessionStorage.setItem("fleutech-admin-key", password);
+    updateAdminUI();
+    // Le mot de passe n'est vraiment vérifié que lors du premier ajout/suppression
+    // (c'est la fonction serveur qui valide) — s'il est faux, un message d'erreur
+    // apparaîtra à ce moment-là plutôt qu'ici.
 }
 
 // Affiche ou cache le bouton "Ajouter une Réalisation" selon le mode admin
 function updateAdminUI() {
     const cta = document.getElementById("realizationsCta");
-    if (cta) cta.style.display = isRealizationsAdmin ? "" : "none";
+    if (cta) cta.style.display = adminKey ? "" : "none";
+}
+
+// Récupère la liste à jour des réalisations depuis le vrai backend
+// (fonction serveur + stockage Netlify Blobs) — persiste pour TOUS les visiteurs.
+async function loadRealizations() {
+    try {
+        const res = await fetch("/.netlify/functions/realizations");
+        realizations = await res.json();
+    } catch (err) {
+        console.error("Impossible de charger les réalisations :", err);
+        realizations = [];
+    }
+    renderRealizations();
 }
 
 // DOM Ready — tout ce qui touche au DOM démarre ici, une seule fois
@@ -686,7 +671,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initTestimonialsCarousel();
     checkAdminAccess();
     updateAdminUI();
-    renderRealizations();
+    loadRealizations();
     initChatbot();
     initForms();
     setupNavigation();
@@ -1247,7 +1232,6 @@ function renderRealizations() {
     realizations.forEach((item, index) => {
         const card = document.createElement("div");
         card.className = "realization-card";
-        // Affiche la photo si le champ "image" contient un chemin (ex: "images/projet1.jpg")
         const imageHtml = item.image
             ? `<img src="${item.image}" alt="${escapeHtml(item.title)}" class="realization-image">`
             : "";
@@ -1259,7 +1243,7 @@ function renderRealizations() {
             <div class="project-tech">
                 ${item.tech.map(t => `<span class="tech-tag">${escapeHtml(t)}</span>`).join("")}
             </div>
-            ${isRealizationsAdmin ? `<button class="btn btn-secondary btn-small" onclick="removeRealization(${index})">Supprimer</button>` : ""}
+            ${adminKey ? `<button class="btn btn-secondary btn-small" onclick="removeRealization(${index})">Supprimer</button>` : ""}
         `;
         grid.appendChild(card);
     });
@@ -1269,30 +1253,105 @@ function showAddRealizationForm() {
     document.getElementById("addRealizationModal").classList.add("show");
 }
 
+// Redimensionne et compresse une photo avant envoi (comme Facebook) — sans ça,
+// une photo de smartphone (4-8 Mo) surchargerait le stockage et ralentirait le site.
+function resizeImageFile(file, maxWidth = 800, quality = 0.7) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                const scale = Math.min(1, maxWidth / img.width);
+                const canvas = document.createElement("canvas");
+                canvas.width = img.width * scale;
+                canvas.height = img.height * scale;
+                canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+                resolve(canvas.toDataURL("image/jpeg", quality));
+            };
+            img.onerror = reject;
+            img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+// Envoie la nouvelle réalisation à la fonction serveur, qui vérifie le mot de
+// passe et sauvegarde dans Netlify Blobs — donc ça persiste vraiment pour tous
+// les visiteurs, pas seulement dans le navigateur de la personne qui ajoute.
 function setupAddRealizationForm() {
     const form = document.getElementById("addRealizationForm");
     if (!form) return;
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const data = new FormData(form);
-        realizations.unshift({
+        const fileInput = document.getElementById("realizationImage");
+        let imageData = "";
+
+        if (fileInput.files && fileInput.files[0]) {
+            try {
+                imageData = await resizeImageFile(fileInput.files[0]);
+            } catch {
+                alert("Impossible de traiter la photo — la réalisation sera ajoutée sans image.");
+            }
+        }
+
+        const newItem = {
             title: data.get("title"),
             description: data.get("description"),
             category: data.get("category"),
-            image: data.get("image"),
+            image: imageData,
             tech: data.get("tech").split(",").map(t => t.trim()).filter(Boolean)
-        });
-        renderRealizations();
-        form.reset();
-        closeModal("addRealizationModal");
+        };
+
+        try {
+            const res = await fetch("/.netlify/functions/realizations", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ adminKey, realization: newItem })
+            });
+
+            if (res.status === 401) {
+                alert("Mot de passe administrateur incorrect.");
+                return;
+            }
+            if (!res.ok) {
+                alert("Cette réalisation n'a pas pu être enregistrée (données invalides ou photo trop lourde).");
+                return;
+            }
+
+            realizations = await res.json();
+            renderRealizations();
+            form.reset();
+            closeModal("addRealizationModal");
+        } catch (err) {
+            alert("Erreur réseau — réessaie dans un instant.");
+        }
     });
 }
 
-function removeRealization(index) {
-    realizations.splice(index, 1);
-    renderRealizations();
+// Supprime une réalisation via la fonction serveur (même vérification de mot de passe)
+async function removeRealization(index) {
+    try {
+        const res = await fetch("/.netlify/functions/realizations", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ adminKey, index })
+        });
+
+        if (res.status === 401) {
+            alert("Mot de passe administrateur incorrect.");
+            return;
+        }
+
+        realizations = await res.json();
+        renderRealizations();
+    } catch (err) {
+        alert("Erreur réseau — réessaie dans un instant.");
+    }
 }
+
 
 // ================================
 // UTILITAIRES
