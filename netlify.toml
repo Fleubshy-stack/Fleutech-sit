@@ -1,3 +1,12 @@
 [build]
   publish = "."
   functions = "netlify/functions"
+ 
+# Redirige automatiquement fleutech.netlify.app vers fleutech.digital.
+# Netlify ne permet pas de "supprimer" le sous-domaine .netlify.app (il existe
+# toujours en interne), mais grâce à ça, personne n'atterrit plus jamais dessus.
+[[redirects]]
+  from = "https://fleutech.netlify.app/*"
+  to = "https://fleutech.digital/:splat"
+  status = 301
+  force = true

@@ -943,6 +943,7 @@ section {
     bottom: 90px;
     width: 360px;
     max-width: calc(100vw - 40px);
+    max-height: calc(100vh - 110px);
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: 22px;
@@ -953,7 +954,15 @@ section {
 }
 
 .chatbot-container.open {
-    display: block;
+    display: flex;
+    flex-direction: column;
+}
+
+.chatbot-header,
+.chatbot-quick-questions,
+.chatbot-persistent-nav,
+.chatbot-input {
+    flex-shrink: 0;
 }
 
 .chatbot-header,
@@ -972,7 +981,9 @@ section {
 }
 
 .chatbot-messages {
-    height: 300px;
+    flex: 1 1 auto;
+    min-height: 100px;
+    max-height: 240px;
     padding: 1rem;
     overflow-y: auto;
 }
@@ -994,6 +1005,12 @@ section {
     gap: 0.5rem;
     padding: 0 1rem 1rem;
     flex-wrap: wrap;
+    max-height: 150px; overflow-y: auto;
+}
+
+.chatbot-quick-questions {
+    max-height: 150px;
+    overflow-y: auto;
 }
 
 /* Bouton "question rapide" : toutes les règles regroupées ici
