@@ -667,7 +667,7 @@ function updateAdminUI() {
 // (fonction serveur + stockage Netlify Blobs) — persiste pour TOUS les visiteurs.
 async function loadRealizations() {
     try {
-        const res = await fetch("/.netlify/functions/realizations");
+        const res = await fetch("/api/realizations");
         realizations = await res.json();
     } catch (err) {
         console.error("Impossible de charger les réalisations :", err);
@@ -718,22 +718,16 @@ function setupNavigation() {
 }
 
 // ================================
-// FORMULAIRES — envoi réel vers Netlify Forms
+// FORMULAIRES — envoi réel via /api/send-message (Resend)
 // ================================
 
-// Encode un objet {clé: valeur} au format attendu par Netlify (comme un formulaire HTML classique)
-function netlifyEncode(data) {
-    return Object.keys(data)
-        .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-        .join("&");
-}
-
-// Envoie des données à Netlify Forms sans recharger la page.
-function submitToNetlify(formName, fields) {
-    return fetch("/", {
+// Envoie un type de formulaire ("contact", "quote", "chatbot-lead") avec ses champs
+// à la fonction serveur Vercel, qui se charge d'expédier un vrai email.
+function submitForm(type, fields) {
+    return fetch("/api/send-message", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: netlifyEncode({ "form-name": formName, ...fields })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type, fields })
     });
 }
 
@@ -746,8 +740,15 @@ function initForms() {
         const data = new FormData(contactForm);
         const fields = Object.fromEntries(data.entries());
 
-        submitToNetlify("contact-form", fields)
-            .then(() => {
+        // Anti-spam : si le champ caché est rempli, on abandonne silencieusement (c'est un robot)
+        if (fields["bot-field"]) {
+            contactForm.reset();
+            return;
+        }
+
+        submitForm("contact", fields)
+            .then((res) => {
+                if (!res.ok) throw new Error("send failed");
                 contactForm.reset();
                 alert(
                     currentLang === "en" ? "Message sent! We'll get back to you soon." :
@@ -964,7 +965,7 @@ function finalizeLeadForm() {
     const closingFn = leadFormClosing[type]?.[currentLang] || leadFormClosing[type]?.fr;
     const message = closingFn ? closingFn(data, ctx) : "Merci, nous avons bien reçu votre demande.";
 
-    submitToNetlify("chatbot-lead", { type: ctx, ...data }).catch(() => {
+    submitForm("chatbot-lead", { type: ctx, ...data }).catch(() => {
         // On ne bloque pas la conversation pour une erreur réseau silencieuse.
     });
 
@@ -1091,7 +1092,7 @@ function submitQuote() {
     fields.services = services.join(", ");
     fields.needs = needs.join(", ");
     fields.estimate = `${estimate}$ - ${estimate + 300}$`;
-    submitToNetlify("quote-form", fields).catch(() => {});
+    submitForm("quote", fields).catch(() => {});
 
     nextStep(4);
 }
@@ -1192,7 +1193,7 @@ function renderTestimonials(list) {
 // Récupère les avis déjà validés depuis le backend
 async function loadTestimonials() {
     try {
-        const res = await fetch("/.netlify/functions/testimonials");
+        const res = await fetch("/api/testimonials");
         const list = await res.json();
         renderTestimonials(list);
     } catch (err) {
@@ -1229,14 +1230,20 @@ function setupTestimonialForm() {
         };
 
         try {
-            const res = await fetch("/.netlify/functions/testimonials", {
+            const res = await fetch("/api/testimonials", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ testimonial: newTestimonial })
             });
 
             if (!res.ok) {
-                alert("Votre avis n'a pas pu être envoyé (vérifiez la longueur de votre texte : 500 caractères max).");
+                let detail = "";
+                try { detail = await res.text(); } catch {}
+                alert(
+                    `Votre avis n'a pas pu être envoyé (code ${res.status})` +
+                    (detail ? ` : ${detail}` : ".") +
+                    (res.status === 404 ? "\n\nLa fonction serveur 'testimonials' semble introuvable — vérifie qu'elle a bien été déployée sur Vercel (dossier /api)." : "")
+                );
                 return;
             }
 
@@ -1266,7 +1273,7 @@ async function loadPendingTestimonials() {
     }
 
     try {
-        const res = await fetch("/.netlify/functions/testimonials?pending=1", {
+        const res = await fetch("/api/testimonials?pending=1", {
             headers: { "X-Admin-Key": adminKey }
         });
         if (!res.ok) {
@@ -1303,7 +1310,7 @@ async function loadPendingTestimonials() {
 
 async function approveTestimonial(id) {
     try {
-        await fetch("/.netlify/functions/testimonials", {
+        await fetch("/api/testimonials", {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ adminKey, id, action: "approve" })
@@ -1317,7 +1324,7 @@ async function approveTestimonial(id) {
 
 async function rejectTestimonial(id) {
     try {
-        await fetch("/.netlify/functions/testimonials", {
+        await fetch("/api/testimonials", {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ adminKey, id })
@@ -1496,7 +1503,7 @@ function setupAddRealizationForm() {
         };
 
         try {
-            const res = await fetch("/.netlify/functions/realizations", {
+            const res = await fetch("/api/realizations", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ adminKey, realization: newItem })
@@ -1507,7 +1514,13 @@ function setupAddRealizationForm() {
                 return;
             }
             if (!res.ok) {
-                alert("Cette réalisation n'a pas pu être enregistrée (données invalides ou photo trop lourde).");
+                let detail = "";
+                try { detail = await res.text(); } catch {}
+                alert(
+                    `Cette réalisation n'a pas pu être enregistrée (code ${res.status})` +
+                    (detail ? ` : ${detail}` : ".") +
+                    (res.status === 404 ? "\n\nLa fonction serveur 'realizations' semble introuvable — vérifie qu'elle a bien été déployée sur Vercel (dossier /api)." : "")
+                );
                 return;
             }
 
@@ -1524,7 +1537,7 @@ function setupAddRealizationForm() {
 // Supprime une réalisation via la fonction serveur (même vérification de mot de passe)
 async function removeRealization(index) {
     try {
-        const res = await fetch("/.netlify/functions/realizations", {
+        const res = await fetch("/api/realizations", {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ adminKey, index })
