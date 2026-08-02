@@ -621,6 +621,18 @@ section {
     color: var(--accent);
 }
 
+.service-option:has(input:checked),
+.needs-option:has(input:checked) {
+    border-color: var(--accent);
+    background: rgba(0, 212, 255, 0.1);
+}
+
+.service-option input:checked ~ .service-checkbox,
+.needs-option input:checked ~ .needs-checkbox {
+    background: var(--accent);
+    color: #001018;
+}
+
 .form-group {
     margin-bottom: 1rem;
 }
@@ -978,6 +990,7 @@ section {
     bottom: 90px;
     width: 360px;
     max-width: calc(100vw - 40px);
+    max-height: calc(100vh - 110px);
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: 22px;
@@ -985,10 +998,19 @@ section {
     box-shadow: var(--shadow-lg);
     z-index: 1200;
     display: none;
+    flex-direction: column;
 }
 
 .chatbot-container.open {
-    display: block;
+    display: flex;
+}
+
+.chatbot-messages {
+    flex: 1;
+    min-height: 0;
+    height: auto;
+    padding: 1rem;
+    overflow-y: auto;
 }
 
 .chatbot-header,
@@ -1018,6 +1040,96 @@ section {
     margin-bottom: 1rem;
 }
 
+.chatbot-faq-select-wrapper {
+    padding: 0 1rem 0.75rem;
+}
+
+.chatbot-faq-select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 14px;
+    background: rgba(10, 15, 28, 0.9);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.chatbot-faq-select optgroup {
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--bg-secondary);
+}
+
+.chatbot-faq-select option {
+    font-weight: 400;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+}
+
+.chatbot-faq-dropdown {
+    position: relative;
+    padding: 0 1rem 0.75rem;
+}
+
+.chatbot-faq-toggle {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 14px;
+    background: rgba(10, 15, 28, 0.9);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.chatbot-faq-list {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 1rem;
+    right: 1rem;
+    max-height: 180px;
+    overflow-y: auto;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-top: 0.4rem;
+    z-index: 20;
+    box-shadow: var(--shadow-lg);
+}
+
+.chatbot-faq-list.open {
+    display: block;
+}
+
+.chatbot-faq-group-label {
+    padding: 0.6rem 1rem 0.3rem;
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.chatbot-faq-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.55rem 1rem;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.chatbot-faq-option:hover {
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--accent);
+}
+
 .ai-message .message-content {
     background: rgba(0, 212, 255, 0.08);
     padding: 0.8rem 1rem;
@@ -1026,9 +1138,24 @@ section {
 
 .chatbot-quick-questions {
     display: flex;
+    flex-direction: column;
     gap: 0.5rem;
     padding: 0 1rem 1rem;
-    flex-wrap: wrap;
+    max-height: 110px;
+    overflow-y: auto;
+}
+
+.chatbot-quick-questions::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chatbot-quick-questions::-webkit-scrollbar-thumb {
+    background: rgba(0, 212, 255, 0.4);
+    border-radius: 999px;
+}
+
+.chatbot-quick-questions::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 .quick-question-btn {

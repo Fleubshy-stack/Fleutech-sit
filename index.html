@@ -13,7 +13,7 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="fr_FR">
 
-    <link rel="icon" type="image/x-icon" href="logo.jpeg">
+    <link rel="icon" type="image/x-icon" href="log.jpeg">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -1187,8 +1187,17 @@
             </div>
         </div>
 
+        
         <div class="chatbot-quick-questions" id="quickQuestions" aria-live="polite"></div>
-
+<div class="chatbot-faq-select-wrapper">
+<div class="chatbot-faq-dropdown" id="chatbotFaqDropdown">
+    <button type="button" class="chatbot-faq-toggle" id="chatbotFaqToggle">
+        <span>Choisir une question</span>
+        <i class="fas fa-chevron-down" aria-hidden="true"></i>
+    </button>
+    <div class="chatbot-faq-list" id="chatbotFaqList"></div>
+</div>
+</div>
         <div class="chatbot-persistent-nav">
             <button type="button" class="chatbot-nav-btn" onclick="goToChatbotMenu()">
                 <span data-i18n="chatMainMenuBtn">↩️ Menu principal</span>
@@ -1224,7 +1233,7 @@
                 </div>
                 <div class="calendly-wrapper">
                     <iframe
-                        src="https://calendly.com/infofleutech/consultation"
+                        src="https://calendly.com/infofleutech"
                         width="100%"
                         height="600"
                         frameborder="0"

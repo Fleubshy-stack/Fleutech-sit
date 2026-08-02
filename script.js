@@ -336,6 +336,63 @@ const translations = {
 // ================================
 // MENU DU CHATBOT — 5 groupes de questions
 // ================================
+
+function populateFaqDropdown() {
+    const list = document.getElementById("chatbotFaqList");
+    if (!list) return;
+    list.innerHTML = "";
+
+    Object.entries(mainMenu).forEach(([groupKey, group]) => {
+        const label = document.createElement("div");
+        label.className = "chatbot-faq-group-label";
+        label.textContent = group.label[currentLang] || group.label.fr;
+        list.appendChild(label);
+
+        Object.entries(group.questions).forEach(([qKey, q]) => {
+            const opt = document.createElement("button");
+            opt.type = "button";
+            opt.className = "chatbot-faq-option";
+            opt.dataset.group = groupKey;
+            opt.dataset.question = qKey;
+            opt.textContent = q.label[currentLang] || q.label.fr;
+            list.appendChild(opt);
+        });
+    });
+}
+
+function setupFaqDropdown() {
+    const toggle = document.getElementById("chatbotFaqToggle");
+    const list = document.getElementById("chatbotFaqList");
+    if (!toggle || !list) return;
+
+    toggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        list.classList.toggle("open");
+    });
+
+    list.addEventListener("click", (e) => {
+        const opt = e.target.closest(".chatbot-faq-option");
+        if (!opt) return;
+        askMenuQuestion(opt.dataset.group, opt.dataset.question);
+        list.classList.remove("open");
+    });
+
+    document.addEventListener("click", () => list.classList.remove("open"));
+}
+
+function setupFaqSelect() {
+    const select = document.getElementById("chatbotFaqSelect");
+    if (!select) return;
+
+    select.addEventListener("change", () => {
+        const value = select.value;
+        if (!value) return;
+        const [groupKey, qKey] = value.split("|");
+        askMenuQuestion(groupKey, qKey);
+        select.value = "";
+    });
+}
+
 const mainMenu = {
   webdev: {
     icon: "fa-store",
@@ -693,6 +750,9 @@ document.addEventListener("DOMContentLoaded", () => {
     setupLanguageSelector();
     setupAddRealizationForm();
     setupChatbotMenu();
+    populateFaqDropdown(); 
+    setupFaqDropdown();
+    
 });
 
 // ================================
@@ -822,42 +882,13 @@ function applyLanguage(lang) {
     if (langBtnEl) langBtnEl.textContent = lang.toUpperCase();
 
     renderChatbotMenu();
+    populateFaqDropdown();
 }
 
 function renderChatbotMenu() {
     const container = document.getElementById("quickQuestions");
     if (!container) return;
-
-    const lang = currentLang;
     container.innerHTML = "";
-
-    if (chatbotFormState.active) return;
-
-    if (chatbotMenuState.level === "sub" && mainMenu[chatbotMenuState.group]) {
-        const group = mainMenu[chatbotMenuState.group];
-
-        Object.entries(group.questions).forEach(([key, q]) => {
-            const btn = document.createElement("button");
-            btn.type = "button";
-            btn.className = "quick-question-btn";
-            btn.dataset.level = "sub";
-            btn.dataset.group = chatbotMenuState.group;
-            btn.dataset.question = key;
-            btn.innerHTML = `<i class="fas fa-comment-dots" aria-hidden="true"></i><span>${q.label[lang] || q.label.fr}</span>`;
-            container.appendChild(btn);
-        });
-        return;
-    }
-
-    Object.entries(mainMenu).forEach(([key, group]) => {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "quick-question-btn";
-        btn.dataset.level = "group";
-        btn.dataset.group = key;
-        btn.innerHTML = `<i class="fas ${group.icon}" aria-hidden="true"></i><span>${group.label[lang] || group.label.fr}</span>`;
-        container.appendChild(btn);
-    });
 }
 
 function setupChatbotMenu() {
@@ -918,8 +949,6 @@ function askMenuQuestion(groupKey, questionKey) {
         setTimeout(() => addMessage("ai", more), 500);
     }, 500);
 
-    chatbotMenuState = { level: "main", group: null };
-    renderChatbotMenu();
 }
 
 function scrollToSection(id) {
