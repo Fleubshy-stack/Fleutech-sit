@@ -12,13 +12,6 @@ const { Redis } = require("@upstash/redis");
 const redis = Redis.fromEnv();
 const KEY = "fleutech:testimonials";
 
-const DEFAULT_TESTIMONIALS = [
-  { id: "seed-1", name: "Marie Dupont", company: "CEO, TechStart France", rating: 5, text: "Fleutech a transformé notre infrastructure informatique. Leur expertise en cybersécurité nous a permis de protéger nos données sensibles. Service professionnel et réactif!", status: "approved" },
-  { id: "seed-2", name: "Esaïe PRIME", company: "Directeur, ICME", rating: 5, text: "Notre site est magnifique et performant. Fleutech a compris nos besoins de façon exceptionnelle. Le support est excellent!", status: "approved" },
-  { id: "seed-3", name: "Pierre Noel", company: "CTO, InnovateHT", rating: 5, text: "L'application web de gestion de projets développée par Fleutech a amélioré notre productivité de 40%. Une équipe technique compétente et à l'écoute.", status: "approved" },
-  { id: "seed-4", name: "Sophie Laurent", company: "Gérante, BureauPlus", rating: 4.5, text: "Service réseau professionnel et fiable. Depuis que Fleutech gère notre infrastructure, nous n'avons plus aucun problème. Investissement recommandé!", status: "approved" }
-];
-
 function genId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 }
