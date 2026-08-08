@@ -1219,6 +1219,20 @@ function renderTestimonials(list) {
         testimonialCarouselInterval = setInterval(() => moveCarousel(1), 6000);
     }
 }
+async function deletePublishedTestimonial(id) {
+    if (!confirm("Supprimer définitivement cet avis ?")) return;
+
+    try {
+        await fetch("/api/testimonials", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ adminKey, id })
+        });
+        loadTestimonials();
+    } catch (err) {
+        alert("Erreur réseau — réessaie dans un instant.");
+    }
+}
 
 // Récupère les avis déjà validés depuis le backend
 async function loadTestimonials() {
