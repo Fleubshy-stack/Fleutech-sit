@@ -696,6 +696,13 @@ section {
     box-shadow: var(--shadow);
 }
 
+.testimonial-delete-btn {
+    margin-top: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .project-image {
     position: relative;
     min-height: 220px;
