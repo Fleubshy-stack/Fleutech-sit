@@ -1203,6 +1203,7 @@ function renderTestimonials(list) {
                     ${item.company ? `<p class="author-company">${escapeHtml(item.company)}</p>` : ""}
                 </div>
             </div>
+            ${adminKey ? `<button class="btn btn-secondary btn-small testimonial-delete-btn" onclick="deletePublishedTestimonial('${item.id}')"><i class="fas fa-trash" aria-hidden="true"></i> Supprimer</button>` : ""}
         `;
         carousel.appendChild(card);
 
