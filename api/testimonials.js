@@ -12,6 +12,9 @@ const { Redis } = require("@upstash/redis");
 const redis = Redis.fromEnv();
 const KEY = "fleutech:testimonials";
 
+const DEFAULT_TESTIMONIALS = [
+  { id: "seed-1", name: "Michel Kervens Junior", company: "Comptable", rating: 5, text: "Fleutech a transformé mon ordinateur", status: "approved" },
+];
 function genId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 }
