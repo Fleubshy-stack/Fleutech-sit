@@ -1,0 +1,9 @@
+{
+  "name": "fleutech-site",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@upstash/redis": "^1.38.0",
+    "resend": "^6.18.1"
+  }
+}
