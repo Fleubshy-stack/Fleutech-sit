@@ -1,0 +1,57 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/*.php": {
+      "runtime": "vercel-php@0.9.0"
+    }
+  },
+  "routes": [
+    {
+      "src": "^/includes(?:/.*)?$",
+      "status": 404
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "^/$",
+      "dest": "/api/page.php?page=index"
+    },
+    {
+      "src": "^/index\\.php$",
+      "dest": "/api/page.php?page=index"
+    },
+    {
+      "src": "^/service\\.php$",
+      "dest": "/api/page.php?page=service"
+    },
+    {
+      "src": "^/solution\\.php$",
+      "dest": "/api/page.php?page=solution"
+    },
+    {
+      "src": "^/stack-tech\\.php$",
+      "dest": "/api/page.php?page=stack-tech"
+    },
+    {
+      "src": "^/blog\\.php$",
+      "dest": "/api/page.php?page=blog"
+    },
+    {
+      "src": "^/avis\\.php$",
+      "dest": "/api/page.php?page=avis"
+    },
+    {
+      "src": "^/contact\\.php$",
+      "dest": "/api/page.php?page=contact"
+    },
+    {
+      "src": "^/conference-ia\\.php$",
+      "dest": "/api/page.php?page=conference-ia"
+    },
+    {
+      "src": "^/statistiques\\.php$",
+      "dest": "/api/page.php?page=statistiques"
+    }
+  ]
+}
