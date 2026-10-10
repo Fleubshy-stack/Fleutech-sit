@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
-    "*.php": {
+    "api/*.php": {
       "runtime": "vercel-php@0.9.0"
     }
   },
@@ -11,43 +11,47 @@
       "status": 404
     },
     {
-      "handle": "filesystem"
-    },
-    {
       "src": "^/$",
-      "dest": "/index.php"
+      "dest": "/api/page.php?page=index"
     },
     {
-      "src": "^/service$",
-      "dest": "/service.php"
+      "src": "^/index\\.php$",
+      "dest": "/api/page.php?page=index"
     },
     {
-      "src": "^/solution$",
-      "dest": "/solution.php"
+      "src": "^/service(?:\\.php)?$",
+      "dest": "/api/page.php?page=service"
     },
     {
-      "src": "^/stack-tech$",
-      "dest": "/stack-tech.php"
+      "src": "^/solution(?:\\.php)?$",
+      "dest": "/api/page.php?page=solution"
     },
     {
-      "src": "^/blog$",
-      "dest": "/blog.php"
+      "src": "^/stack-tech(?:\\.php)?$",
+      "dest": "/api/page.php?page=stack-tech"
     },
     {
-      "src": "^/avis$",
-      "dest": "/avis.php"
+      "src": "^/blog(?:\\.php)?$",
+      "dest": "/api/page.php?page=blog"
     },
     {
-      "src": "^/contact$",
-      "dest": "/contact.php"
+      "src": "^/avis(?:\\.php)?$",
+      "dest": "/api/page.php?page=avis"
     },
     {
-      "src": "^/conference-ia$",
-      "dest": "/conference-ia.php"
+      "src": "^/contact(?:\\.php)?$",
+      "dest": "/api/page.php?page=contact"
     },
     {
-      "src": "^/statistiques$",
-      "dest": "/statistiques.php"
+      "src": "^/conference-ia(?:\\.php)?$",
+      "dest": "/api/page.php?page=conference-ia"
+    },
+    {
+      "src": "^/statistiques(?:\\.php)?$",
+      "dest": "/api/page.php?page=statistiques"
+    },
+    {
+      "handle": "filesystem"
     }
   ]
 }

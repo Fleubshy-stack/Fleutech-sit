@@ -4,7 +4,7 @@ Le site utilise le runtime communautaire `vercel-php@0.9.0` pour ses pages PHP e
 
 ## Configuration Vercel
 
-1. Importer le dépôt dans Vercel et choisir le dossier `web` comme **Root Directory**.
+1. Importer le dépôt GitHub dans Vercel. Les fichiers du site étant directement à la racine du dépôt, laisser **Root Directory** vide (racine du dépôt) ; ne pas choisir ni créer un dossier `web`.
 2. Garder les commandes de build et de sortie par défaut : les pages PHP sont exécutées par le runtime configuré dans `vercel.json`.
 3. Ajouter les variables suivantes dans **Settings > Environment Variables** :
    - `UPSTASH_REDIS_REST_URL`
@@ -15,6 +15,8 @@ Le site utilise le runtime communautaire `vercel-php@0.9.0` pour ses pages PHP e
 4. Déployer à nouveau après avoir configuré ces variables.
 
 Upstash Redis sert au stockage des avis, des réalisations, des inscriptions et des statistiques de visites sur Vercel. Resend sert aux formulaires de contact et de devis.
+
+`vercel.json` associe les pages courtes (`/service`) et les anciennes URL `.php` aux entrées PHP sous `api/`. Les requêtes sont rendues par `api/page.php`; les fonctions JavaScript d’API restent disponibles sous `/api/...`.
 
 ## XAMPP en local
 
